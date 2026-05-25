@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -89,24 +89,24 @@
       background: #0a0a0a;
     }
 
-    /* 배경 이미지 (사진 없을 때는 패턴) */
+        /* 배경 이미지 (사진 없을 때는 패턴) */
     .hero-backdrop {
       position: absolute;
       inset: 0;
-      background: var(--surface2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: #0a0a0a;
       overflow: hidden;
     }
 
     .hero-backdrop img {
-      width: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
       height: 100%;
+      width: auto;
+      min-width: 45%;
       object-fit: cover;
       object-position: top center;
-      filter: blur(2px) brightness(0.5);
-      transform: scale(1.05);
+      filter: brightness(0.9);
     }
 
     .hero-backdrop-initial {
@@ -117,18 +117,24 @@
       position: absolute;
     }
 
-    /* 그라디언트 오버레이 */
+        /* 그라디언트 오버레이 */
     .hero-overlay {
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(
-          77deg,
-          rgba(20,20,20,0.95) 0%,
-          rgba(20,20,20,0.7) 40%,
-          rgba(20,20,20,0.2) 70%
+        linear-gradient(90deg,
+          rgba(20,20,20,1)    0%,
+          rgba(20,20,20,0.95) 30%,
+          rgba(20,20,20,0.6)  55%,
+          rgba(20,20,20,0.1)  75%,
+          transparent         90%
         ),
-        linear-gradient(180deg, rgba(0,0,0,0.2) 0%, #141414 100%);
+        linear-gradient(180deg,
+          rgba(0,0,0,0.3) 0%,
+          transparent     20%,
+          transparent     75%,
+          #141414         100%
+        );
     }
 
     /* 히어로 콘텐츠 */
