@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>하하 — KET</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #141414; --surface: #1f1f1f; --surface2: #2a2a2a;
+      --red: #1d6bf3; --red-d: #1558d6;
+      --text: #fff; --text-dim: #b3b3b3; --text-mute: #808080; --border: #333;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR','Helvetica Neue',Arial,sans-serif; min-height:100vh; -webkit-font-smoothing:antialiased; }
+    header { position:fixed; top:0; left:0; right:0; z-index:300; padding:0 4%; height:68px; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(180deg,rgba(0,0,0,0.9) 0%,transparent 100%); transition:background 0.3s; }
+    header.scrolled { background:#141414; }
+    .header-left { display:flex; align-items:center; gap:32px; }
+    .logo { font-size:22px; font-weight:900; letter-spacing:2px; color:var(--red); text-decoration:none; }
+    nav { display:flex; gap:20px; }
+    nav a { color:var(--text-dim); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.15s; }
+    nav a:hover { color:var(--text); }
+    nav a.active { color:var(--text); font-weight:700; }
+    .nav-toggle { display:none; background:none; border:none; color:var(--text); font-size:22px; cursor:pointer; }
+
+    .detail-hero { position:relative; height:70vw; max-height:580px; min-height:340px; overflow:hidden; background:#0a0a0a; }
+    .hero-backdrop { position:absolute; inset:0; background:var(--surface2); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .hero-backdrop img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top center; filter:blur(10px) brightness(0.25); transform:scale(1.1); }
+    .hero-backdrop-initial { font-size:clamp(120px,25vw,280px); font-weight:900; color:rgba(255,255,255,0.03); user-select:none; position:absolute; }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(77deg,rgba(20,20,20,0.95) 0%,rgba(20,20,20,0.7) 40%,rgba(20,20,20,0.2) 70%),linear-gradient(180deg,rgba(0,0,0,0.2) 0%,#141414 100%); }
+    .hero-inner { position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:1200px; }
+    .hero-photo { position:absolute; bottom:12%; right:4vw; width:clamp(160px,22vw,290px); aspect-ratio:1/1; border-radius:8px; overflow:hidden; box-shadow:0 8px 48px rgba(0,0,0,0.8); z-index:2; }
+    .hero-photo img { width:100%; height:100%; object-fit:cover; object-position:top center; }
+    .hero-content { position:absolute; bottom:12%; left:4vw; z-index:2; max-width:600px; }
+    .hero-badges { display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+    .hero-tier-badge { font-size:11px; font-weight:900; padding:4px 12px; border-radius:3px; letter-spacing:1.5px; }
+    .htb-s { background:var(--red); color:#fff; }
+    .htb-a { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#fff; }
+    .hero-rank-badge { font-size:11px; font-weight:700; color:var(--text-dim); padding:4px 12px; border:1px solid var(--border); border-radius:3px; }
+    .hero-name { font-size:clamp(36px,6vw,64px); font-weight:900; line-height:1.05; letter-spacing:-1.5px; margin-bottom:20px; text-shadow:2px 4px 16px rgba(0,0,0,0.6); }
+
+    .detail-body { padding:20px 4% 80px; display:grid; grid-template-columns:1fr 340px; gap:40px; max-width:1200px; margin:0 auto; }
+    .eval-section { margin-bottom:40px; }
+    .eval-text { font-size:15px; line-height:1.85; color:var(--text-dim); max-width:600px; }
+    .eval-text strong { color:var(--text); font-weight:700; }
+    .verdict-box { margin-top:20px; padding:16px 20px; border-left:3px solid var(--red); background:rgba(29,107,243,0.06); border-radius:0 6px 6px 0; }
+    .verdict-box p { font-size:14px; font-weight:700; color:#6aa3f8; line-height:1.6; }
+    .section-label { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--text-mute); margin-bottom:16px; }
+
+    .fill-red { background:#e50914; } .fill-orange { background:#f97316; } .fill-amber { background:#f59e0b; }
+    .fill-blue { background:#3b82f6; } .fill-purple { background:#8b5cf6; } .fill-green { background:#22c55e; } .fill-cyan { background:#06b6d4; }
+
+    .stats-layout { display:grid; grid-template-columns:1fr 253px; gap:20px; align-items:center; max-width:680px; margin-bottom:40px; }
+    .stat-cards-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+    .stat-card { background:var(--surface); border-radius:6px; padding:11px 13px 9px; }
+    .stat-card-name { font-size:10px; font-weight:700; color:var(--text-mute); margin-bottom:4px; }
+    .stat-card-num { font-size:25px; font-weight:900; line-height:1; color:var(--text); margin-bottom:7px; }
+    .stat-card-bar { height:3px; background:var(--surface2); border-radius:2px; overflow:hidden; }
+    .stat-card-fill { height:100%; border-radius:2px; width:0; transition:width 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .radar-wrap { display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .radar-caption { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--text-mute); }
+
+    .pros-cons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:40px; }
+    .pc-block { background:var(--surface); border-radius:4px; padding:16px 18px; }
+    .pc-title { font-size:10px; font-weight:700; letter-spacing:1.5px; margin-bottom:10px; }
+    .pc-pros .pc-title { color:#4ade80; } .pc-cons .pc-title { color:#f87171; }
+    .pc-item { font-size:13px; color:var(--text-dim); line-height:1.8; display:flex; gap:8px; }
+    .pc-item::before { content:'·'; color:var(--text-mute); flex-shrink:0; }
+
+    .programs-section { margin-bottom:40px; }
+    .program-list { display:flex; flex-direction:column; gap:2px; }
+    .program-item { display:flex; align-items:center; gap:14px; padding:12px 14px; border-radius:4px; font-size:14px; transition:background 0.15s; cursor:default; }
+    .program-item:hover { background:var(--surface); }
+    .program-num { font-size:20px; font-weight:900; color:rgba(255,255,255,0.12); width:28px; text-align:center; flex-shrink:0; }
+    .program-info { flex:1; }
+    .program-name { font-weight:700; color:var(--text); margin-bottom:2px; }
+    .program-role { font-size:12px; color:var(--text-mute); }
+    .program-dot { width:4px; height:4px; border-radius:50%; background:var(--red); flex-shrink:0; margin-left:auto; }
+
+    .side-section { margin-bottom:24px; }
+    .side-label { font-size:11px; color:var(--text-mute); margin-bottom:4px; }
+    .side-value { font-size:14px; color:var(--text); font-weight:500; }
+    .side-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+    .stag { font-size:12px; font-weight:600; padding:4px 11px; border-radius:3px; }
+    .stag-red { background:rgba(29,107,243,0.15); color:#6aa3f8; border:1px solid rgba(29,107,243,0.3); }
+    .stag-white { background:rgba(255,255,255,0.07); color:var(--text-dim); border:1px solid var(--border); }
+    .stag-green { background:rgba(34,197,94,0.1); color:#4ade80; border:1px solid rgba(34,197,94,0.2); }
+    .rep-block { background:var(--surface); border-radius:4px; padding:18px 20px; margin-bottom:24px; }
+    .rep-label { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--text-mute); margin-bottom:10px; }
+    .rep-num { font-size:48px; font-weight:900; line-height:1; color:var(--red); margin-bottom:10px; }
+    .rep-num sub { font-size:16px; font-weight:400; color:var(--text-mute); vertical-align:baseline; margin-left:3px; }
+    .rep-bar { height:4px; background:var(--surface2); border-radius:2px; overflow:hidden; }
+    .rep-fill { height:100%; border-radius:2px; background:var(--red); transition:width 1.1s cubic-bezier(0.16,1,0.3,1); }
+    .rep-change { font-size:12px; color:#4ade80; margin-top:8px; }
+    .side-divider { height:1px; background:var(--border); margin:20px 0; }
+
+    @media (max-width:860px) {
+      header { padding:0 5%; }
+      nav { display:none; }
+      nav.open { display:flex; flex-direction:column; position:fixed; top:68px; left:0; right:0; background:#141414; border-bottom:1px solid var(--border); padding:20px 5%; gap:20px; z-index:299; }
+      .nav-toggle { display:block; }
+      .detail-body { grid-template-columns:1fr; padding:0 5% 60px; gap:24px; }
+      .detail-side { order:-1; }
+      .rep-block { display:none; }
+      .pros-cons { grid-template-columns:1fr; }
+      .stats-layout { grid-template-columns:1fr; }
+      .radar-wrap { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="logo">KET</a>
+      <nav id="main-nav">
+        <a href="../index.html">홈</a>
+        <a href="../tier.html" class="active">티어</a>
+        <a href="../youtube.html">유튜브</a>
+        <a href="../legend.html">레전드</a>
+      </nav>
+    </div>
+    <button class="nav-toggle" onclick="document.getElementById('main-nav').classList.toggle('open')">☰</button>
+  </header>
+
+  <div class="detail-hero">
+    <div class="hero-backdrop">
+      <div class="hero-backdrop-initial">하</div>
+      <img src="../img/profile/하하프사1.webp" alt="하하" onerror="this.style.display='none'">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+    <div class="hero-photo"><img src="../img/profile/하하프사1.webp" alt=""></div>
+    <div class="hero-content">
+      <div class="hero-name">하하</div>
+      <div class="hero-badges">
+        <span class="hero-tier-badge htb-a">A TIER</span>
+        <span class="hero-rank-badge">예능 장군</span>
+        <span class="hero-rank-badge">본능형 · 딜러</span>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="detail-body">
+    <div class="detail-main">
+
+      <div class="eval-section">
+        <div class="section-label">예능인 분석</div>
+        <p class="eval-text"><strong>하하</strong>는 끊임없이 분출되는 에너지와 높은 친화력을 무기로 <strong>20년 이상 현역을 유지하는 본능형 딜러</strong>다. 무한도전·런닝맨이라는 두 레전드 프로그램에서 핵심 멤버로 활약하며 그 능력을 증명했다.<br><br>팀 분위기를 밝게 만드는 긍정적 에너지와 <strong>빠른 본능적 반응</strong>이 결합되어, 어떤 상황에서도 자연스럽게 포지션을 만들어낸다. 가수 활동과의 크로스오버도 강점이다.</p>
+        <div class="verdict-box">
+          <p>정리 — "꺼지지 않는 에너지와 20년 내구성.<br>무한도전과 런닝맨이 함께 증명한 A급 본능형 딜러."</p>
+        </div>
+      </div>
+
+      <div class="section-label">예능 스탯</div>
+      <div class="stats-layout">
+        <div class="stat-cards-grid">
+          <div class="stat-card">
+            <div class="stat-card-name">개인기</div>
+            <div class="stat-card-num">82</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-red" data-w="82"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-name">순발력</div>
+            <div class="stat-card-num">85</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-orange" data-w="85"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-name">판단력</div>
+            <div class="stat-card-num">78</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-amber" data-w="78"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-name">기획력</div>
+            <div class="stat-card-num">72</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-cyan" data-w="72"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-name">리액션</div>
+            <div class="stat-card-num">88</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-green" data-w="88"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-name">언변</div>
+            <div class="stat-card-num">80</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-purple" data-w="80"></div></div>
+          </div>
+        </div>
+        <div class="radar-wrap">
+          <canvas id="stat-radar" width="242" height="242"></canvas>
+          <div class="radar-caption">K E T &nbsp; 공식 스탯</div>
+        </div>
+      </div>
+
+      <div class="section-label">예능인 장·단점</div>
+      <div class="pros-cons">
+        <div class="pc-block pc-pros">
+          <div class="pc-title">강점 PROS</div>
+          <div class="pc-item">강한 에너지와 긍정적 분위기</div>
+          <div class="pc-item">높은 팀플레이</div>
+          <div class="pc-item">가수·예능 크로스오버</div>
+        </div>
+        <div class="pc-block pc-cons">
+          <div class="pc-title">약점 CONS</div>
+          <div class="pc-item">독보적 단독 임팩트는 다소 약세</div>
+          <div class="pc-item">진행 포지션 제한</div>
+        </div>
+      </div>
+
+      <div class="programs-section">
+        <div class="section-label">대표 프로그램</div>
+        <div class="program-list">
+          <div class="program-item">
+            <span class="program-num">1</span>
+            <div class="program-info">
+              <div class="program-name">무한도전</div>
+              <div class="program-role">고정 멤버</div>
+            </div>
+            <div class="program-dot"></div>
+          </div>
+          <div class="program-item">
+            <span class="program-num">2</span>
+            <div class="program-info">
+              <div class="program-name">런닝맨</div>
+              <div class="program-role">고정 멤버</div>
+            </div>
+            <div class="program-dot"></div>
+          </div>
+          <div class="program-item">
+            <span class="program-num">3</span>
+            <div class="program-info">
+              <div class="program-name">놀면 뭐하니</div>
+              <div class="program-role">출연</div>
+            </div>
+            <div class="program-dot"></div>
+          </div>
+          <div class="program-item">
+            <span class="program-num">4</span>
+            <div class="program-info">
+              <div class="program-name">라디오스타</div>
+              <div class="program-role">게스트</div>
+            </div>
+            <div class="program-dot"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="detail-side">
+      <div class="rep-block">
+        <div class="rep-label">예능평판지수 · 26년 1Q</div>
+        <div class="rep-num">82<sub>/ 100</sub></div>
+        <div class="rep-bar"><div class="rep-fill" data-w="82"></div></div>
+        <div class="rep-change">▲ 1점 상승 (런닝맨 장수)</div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-label">티어</div>
+        <div class="side-value" style="color:var(--red);font-weight:900;font-size:16px;">A — 예능 장군</div>
+      </div>
+
+      <div class="side-divider"></div>
+
+      <div class="side-section">
+        <div class="side-label">유형</div>
+        <div class="side-tags"><span class="stag stag-red">본능형</span></div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-label">포지션</div>
+        <div class="side-tags"><span class="stag stag-white">딜러</span></div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-label">출신</div>
+        <div class="side-tags"><span class="stag stag-green">개그맨 / 가수 출신</span></div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-label">활동 기간</div>
+        <div class="side-value">2001년 — 현재</div>
+      </div>
+
+      <div class="side-divider"></div>
+
+      <div class="side-section">
+        <div class="side-label">관련 영상</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;">
+          <div style="padding:12px 14px;background:var(--surface);border-radius:4px;font-size:13px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='var(--surface)'">
+            <div style="font-weight:700;color:var(--text);margin-bottom:3px;">하하 A급 분석</div>
+            <div style="color:var(--text-mute);font-size:11px;">예썰 · 준비중</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const hdr = document.getElementById('main-header');
+    window.addEventListener('scroll', () => { hdr.classList.toggle('scrolled', window.scrollY > 60); });
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelectorAll('.stat-card-fill, .rep-fill').forEach(el => { el.style.width = (el.dataset.w || 0) + '%'; });
+        drawRadar();
+      }, 300);
+    });
+    function drawRadar() {
+      const canvas = document.getElementById('stat-radar');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2;
+      const R = Math.min(cx,cy) - 30, N = 6, LEVELS = 3;
+      const LABELS = ['개인기','순발력','판단력','기획력','리액션','언변'];
+      const VALUES = [82, 85, 78, 72, 88, 80];
+      const ang = i => (Math.PI*2*i/N) - Math.PI/2;
+      const pt  = (i,r) => [cx + r*Math.cos(ang(i)), cy + r*Math.sin(ang(i))];
+      let progress = 0;
+      const draw = () => {
+        ctx.clearRect(0,0,W,H);
+        for (let lv=1;lv<=LEVELS;lv++) {
+          const r=R*lv/LEVELS; ctx.beginPath();
+          for (let i=0;i<N;i++) { const [x,y]=pt(i,r); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }
+          ctx.closePath(); ctx.strokeStyle='rgba(160,130,40,0.28)'; ctx.lineWidth=1; ctx.stroke();
+        }
+        for (let i=0;i<N;i++) {
+          const [x,y]=pt(i,R); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y);
+          ctx.strokeStyle='rgba(160,130,40,0.22)'; ctx.lineWidth=1; ctx.stroke();
+        }
+        const ease = t => 1-Math.pow(1-t,3), p = ease(Math.min(progress,1));
+        ctx.beginPath();
+        for (let i=0;i<N;i++) { const r=R*VALUES[i]/100*p; const [x,y]=pt(i,r); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }
+        ctx.closePath(); ctx.fillStyle='rgba(210,170,30,0.15)'; ctx.fill();
+        ctx.strokeStyle='rgba(210,170,30,0.88)'; ctx.lineWidth=2; ctx.stroke();
+        for (let i=0;i<N;i++) { const r=R*VALUES[i]/100*p; const [x,y]=pt(i,r); ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2); ctx.fillStyle='rgba(230,185,40,1)'; ctx.fill(); }
+        ctx.font='bold 11px "Noto Sans KR",Arial,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        for (let i=0;i<N;i++) { const [x,y]=pt(i,R+20); ctx.fillStyle='rgba(180,180,180,0.9)'; ctx.fillText(LABELS[i],x,y); }
+        if (progress<1) { progress+=0.04; requestAnimationFrame(draw); }
+      };
+      requestAnimationFrame(draw);
+    }
+  </script>
+</body>
+</html>
