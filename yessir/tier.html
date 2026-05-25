@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KET — 티어표</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #141414;
+      --surface2:  #1e1e1e;
+      --surface3:  #262626;
+      --border:    #2a2a2a;
+      --border2:   #383838;
+      --red:       #e50914;
+      --red-h:     #ff2030;
+      --text:      #ffffff;
+      --text-dim:  #b3b3b3;
+      --text-mute: #666666;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════
+       GNB
+    ═══════════════════════ */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 300;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .gnb-inner {
+      width: 100%;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      padding: 0 20px 0 24px;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--text);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    nav { display: flex; align-items: stretch; }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      min-width: 64px;
+      text-decoration: none;
+      color: var(--text-mute);
+      font-size: 13px;
+      font-weight: 700;
+      transition: color 0.15s, background 0.15s;
+      border-right: 1px solid var(--border);
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .nav-tab:first-child { border-left: 1px solid var(--border); }
+    .nav-tab:hover { color: var(--text); background: var(--surface); }
+
+    .nav-tab.active {
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .gnb-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+    }
+
+    .gnb-search-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .gnb-search-wrap:focus-within { border-color: #555; }
+
+    .gnb-search-icon { padding: 0 10px; color: var(--text-mute); font-size: 14px; }
+
+    .gnb-search {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 13px;
+      padding: 7px 12px 7px 0;
+      width: 200px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .gnb-search::placeholder { color: var(--text-mute); }
+
+    .gnb-menu {
+      width: 34px; height: 34px;
+      border-radius: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      letter-spacing: 2px;
+    }
+
+    .gnb-menu:hover { background: var(--surface3); }
+
+    /* ═══════════════════════
+       페이지 헤더
+    ═══════════════════════ */
+    .page-header {
+      padding: 40px 5% 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+
+    .page-header h1 {
+      font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .page-header h1 span { color: var(--red); }
+
+    .page-header p {
+      font-size: 12px;
+      color: var(--text-mute);
+    }
+
+    /* ═══════════════════════
+       티어표 섹션
+    ═══════════════════════ */
+    .tier-section {
+      padding: 32px 5% 60px;
+    }
+
+    /* 필터 */
+    .filters-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 32px;
+      padding: 16px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-row-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-mute);
+      letter-spacing: 1px;
+      width: 44px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .filter-sep { width: 1px; height: 14px; background: var(--border2); }
+
+    .filter-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 5px 15px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .filter-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+    /* 티어 블록 */
+    .tier-blocks { display: flex; flex-direction: column; gap: 32px; }
+
+    .tier-block-hd {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .tb-badge {
+      font-size: 10px;
+      font-weight: 900;
+      padding: 3px 9px;
+      border-radius: 3px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+
+    .tb-s { background: rgba(229,9,20,0.18); color: #e50914; border: 1px solid rgba(229,9,20,0.4); }
+    .tb-a { background: rgba(249,115,22,0.14); color: #f97316; border: 1px solid rgba(249,115,22,0.3); }
+    .tb-b { background: rgba(234,179,8,0.12); color: #eab308; border: 1px solid rgba(234,179,8,0.25); }
+    .tb-c { background: rgba(20,184,166,0.12); color: #14b8a6; border: 1px solid rgba(20,184,166,0.25); }
+    .tb-d { background: rgba(99,102,241,0.1); color: #6366f1; border: 1px solid rgba(99,102,241,0.2); }
+
+    .tb-name { font-size: 18px; font-weight: 900; }
+    .tb-desc { font-size: 12px; color: var(--text-mute); }
+
+    /* 카드 그리드 */
+    .tier-cards-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ═══════════════════════
+       프로필 카드
+    ═══════════════════════ */
+    .p-card {
+      width: 155px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.18s, box-shadow 0.18s;
+    }
+
+    .p-card:hover {
+      border-bottom-color: var(--red);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+
+    .p-thumb {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .p-initial {
+      font-size: 80px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.09);
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+      position: absolute;
+    }
+
+    .p-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      z-index: 1;
+    }
+
+    .p-hover-info { display: none; }
+
+    .p-hover-badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .p-name {
+      padding: 8px 10px 5px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .p-meta {
+      padding: 0 8px 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      background: var(--surface2);
+    }
+
+    .badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .b-jiryak   { color: #60a5fa; background: rgba(37,99,235,0.5); }
+    .b-muryok   { color: #fdba74; background: rgba(194,65,12,0.6); }
+    .b-bonneung { color: #d8b4fe; background: rgba(126,34,206,0.5); }
+    .b-pos      { color: #d4d4d4; background: rgba(255,255,255,0.12); }
+
+    /* 빈 카드 */
+    .p-card-empty {
+      width: 155px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+      opacity: 0.25;
+    }
+
+    .p-empty-thumb {
+      aspect-ratio: 1;
+      background: #1a1a1a;
+      border: 1px dashed #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #444;
+      font-size: 28px;
+    }
+
+    .p-empty-name {
+      padding: 8px 10px 9px;
+      font-size: 12px;
+      color: #444;
+    }
+
+    /* ═══════════════════════
+       유형·포지션 가이드
+    ═══════════════════════ */
+    .guide-section {
+      margin: 24px 5% 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .guide-toggle {
+      width: 100%;
+      background: var(--surface);
+      border: none;
+      color: var(--text-dim);
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: background 0.15s;
+    }
+
+    .guide-toggle:hover { background: var(--surface2); }
+
+    .guide-arrow {
+      font-size: 13px;
+      color: var(--text-mute);
+      transition: transform 0.2s;
+    }
+
+    .guide-toggle.open .guide-arrow { transform: rotate(180deg); }
+
+    .guide-body {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 20px 20px 16px;
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .guide-body.open { display: grid; }
+
+    .guide-group { padding: 0 16px 0 0; }
+    .guide-group + .guide-group {
+      padding: 0 0 0 20px;
+      border-left: 1px solid var(--border);
+    }
+
+    .guide-group-title {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-mute);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .guide-items { display: flex; flex-direction: column; gap: 10px; }
+
+    .guide-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .guide-badge {
+      flex-shrink: 0;
+      font-size: 10px !important;
+      padding: 3px 8px !important;
+      min-width: 52px;
+      text-align: center;
+      margin-top: 1px;
+    }
+
+    .guide-desc {
+      font-size: 12px;
+      color: var(--text-mute);
+      line-height: 1.6;
+    }
+
+    /* 필터로 숨겨진 티어 블록 */
+    .tier-block.hidden { display: none; }
+
+    /* 결과 없음 */
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-mute);
+      font-size: 14px;
+      display: none;
+    }
+
+    /* ═══════════════════════
+       푸터
+    ═══════════════════════ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo { font-size: 16px; font-weight: 900; letter-spacing: 2px; color: var(--text-dim); }
+
+    .footer-scroll {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-mute);
+      cursor: pointer;
+      font-size: 14px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .footer-scroll:hover { border-color: #555; color: var(--text-dim); }
+    .footer-copy { font-size: 11px; color: var(--text-mute); }
+
+    @media (max-width: 768px) {
+      .guide-body.open { grid-template-columns: 1fr; }
+      .guide-group + .guide-group { padding: 16px 0 0; border-left: none; border-top: 1px solid var(--border); margin-top: 16px; }
+    }
+
+    /* ═══════════════════════
+       태블릿 (≤768px)
+    ═══════════════════════ */
+    @media (max-width: 768px) {
+      /* GNB */
+      .nav-label { display: none; }
+      .nav-tab { min-width: 44px; padding: 0 10px; }
+      .gnb-search { width: 120px; }
+
+      /* 페이지 헤더 */
+      .page-header { padding: 24px 4% 16px; }
+      .page-header h1 { font-size: 20px; }
+
+      /* 티어표 */
+      .tier-section { padding: 20px 4% 40px; }
+      .filters-wrap { padding: 12px 14px; }
+      .filter-btn { padding: 4px 11px; font-size: 11px; }
+      .tier-block-hd { flex-wrap: wrap; row-gap: 4px; }
+      .tb-desc { width: 100%; padding-left: 52px; font-size: 11px; }
+      .p-card { width: calc(50% - 4px); }
+
+      /* 푸터 */
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* ═══════════════════════
+       모바일 (≤480px)
+    ═══════════════════════ */
+    @media (max-width: 480px) {
+      /* GNB */
+      .gnb-search-wrap { display: none; }
+      .logo { font-size: 17px; letter-spacing: 1px; }
+      .nav-tab { min-width: 40px; padding: 0 8px; }
+
+      /* 페이지 헤더 */
+      .page-header { padding: 18px 4% 14px; }
+      .page-header h1 { font-size: 18px; }
+      .page-header p { font-size: 11px; }
+
+      /* 필터 */
+      .filters-wrap { gap: 6px; }
+      .filter-row-label { display: none; }
+      .filter-sep { display: none; }
+      .filter-btn { padding: 4px 9px; font-size: 11px; }
+
+      /* 티어 */
+      .tier-section { padding: 16px 3% 32px; }
+      .tb-badge { width: 34px; height: 34px; font-size: 15px; }
+      .tb-name { font-size: 15px; }
+      .tb-desc { display: none; }
+      .tier-blocks { gap: 24px; }
+      .tier-cards-grid { gap: 6px; }
+      .p-card { width: calc(50% - 3px); }
+      .p-name { font-size: 12px; padding: 6px 8px 5px; }
+      .p-meta { padding: 0 6px 6px; gap: 3px; }
+      .badge { font-size: 8px; padding: 1px 5px; }
+
+      /* 푸터 */
+      footer { padding: 16px 4%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GNB -->
+  <header>
+    <div class="gnb-inner">
+      <a href="design-a.html" class="logo">KET</a>
+      <nav>
+        <a href="design-a.html" class="nav-tab">홈</a>
+        <a href="tier.html" class="nav-tab active">티어</a>
+        <a href="youtube.html" class="nav-tab">유튜브</a>
+        <a href="legend.html" class="nav-tab">레전드</a>
+      </nav>
+      <div class="gnb-right">
+        <div class="gnb-search-wrap">
+          <span class="gnb-search-icon">⌕</span>
+          <input class="gnb-search" type="text" placeholder="예능인 검색..." id="search-input">
+        </div>
+        <div class="gnb-menu">···</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 페이지 헤더 -->
+  <div class="page-header">
+    <h1><span>K-Entertainment Tier</span></h1>
+    <p>예능인을 클릭하면 상세 프로필을 확인할 수 있습니다 · 마지막 업데이트 2024.05.24</p>
+  </div>
+
+  <!-- 유형·포지션 가이드 -->
+  <div class="guide-section">
+    <button class="guide-toggle open" id="guide-toggle">
+      <span>유형 · 포지션 가이드</span>
+      <span class="guide-arrow">▾</span>
+    </button>
+    <div class="guide-body open" id="guide-body">
+      <div class="guide-group">
+        <div class="guide-group-title">유형</div>
+        <div class="guide-items">
+          <div class="guide-item">
+            <span class="badge b-muryok guide-badge">무력형</span>
+            <div class="guide-desc">개인기·기세·신체적 임팩트로 웃음을 만드는 유형. 에너지 자체가 콘텐츠가 된다.</div>
+          </div>
+          <div class="guide-item">
+            <span class="badge b-jiryak guide-badge">지략형</span>
+            <div class="guide-desc">꽁트 및 설계, 상황 판단으로 웃음을 설계하는 유형. 머리로 판을 짠다.</div>
+          </div>
+          <div class="guide-item">
+            <span class="badge b-bonneung guide-badge">본능형</span>
+            <div class="guide-desc">즉흥·반응·감각으로 웃음을 만드는 유형. 계획 없이 터뜨리는 것이 강점이다.</div>
+          </div>
+        </div>
+      </div>
+      <div class="guide-group">
+        <div class="guide-group-title">포지션</div>
+        <div class="guide-items">
+          <div class="guide-item">
+            <span class="badge b-pos guide-badge">딜러</span>
+            <div class="guide-desc">직접 웃음을 생산하는 포지션. 공격력이 핵심이다.</div>
+          </div>
+          <div class="guide-item">
+            <span class="badge b-pos guide-badge">탱커</span>
+            <div class="guide-desc">맞아주고 버텨주며 상황을 유지하는 포지션. 내구성이 핵심이다.</div>
+          </div>
+          <div class="guide-item">
+            <span class="badge b-pos guide-badge">서포터</span>
+            <div class="guide-desc">다른 출연자의 웃음을 받쳐주는 포지션. 보이지 않는 기여가 핵심이다.</div>
+          </div>
+          <div class="guide-item">
+            <span class="badge b-pos guide-badge">스틸러</span>
+            <div class="guide-desc">상황을 가로채 임팩트 있는 한 방을 날리는 포지션. 타이밍이 핵심이다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 티어표 -->
+  <section class="tier-section">
+
+    <!-- 필터 -->
+    <div class="filters-wrap">
+      <div class="filter-row">
+        <span class="filter-row-label">유형</span>
+        <div class="filter-sep"></div>
+        <button class="filter-btn active" data-filter="type" data-val="all">전체</button>
+        <button class="filter-btn" data-filter="type" data-val="무력">무력형</button>
+        <button class="filter-btn" data-filter="type" data-val="지략">지략형</button>
+        <button class="filter-btn" data-filter="type" data-val="본능">본능형</button>
+      </div>
+      <div class="filter-row">
+        <span class="filter-row-label">포지션</span>
+        <div class="filter-sep"></div>
+        <button class="filter-btn" data-filter="pos" data-val="탱커">탱커</button>
+        <button class="filter-btn" data-filter="pos" data-val="딜러">딜러</button>
+        <button class="filter-btn" data-filter="pos" data-val="서포터">서포터</button>
+        <button class="filter-btn" data-filter="pos" data-val="스틸러">스틸러</button>
+        <button class="filter-btn" data-filter="pos" data-val="MC">MC</button>
+      </div>
+    </div>
+
+    <div class="tier-blocks" id="tier-blocks">
+
+      <!-- S -->
+      <div class="tier-block" id="tier-s">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-s">S</span>
+          <span class="tb-name">예능 대장군</span>
+          <span class="tb-desc">혼자서 예능 프로그램 단독으로 진행 가능한 수준</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb">
+              <span class="p-initial">강</span>
+              <img src="img/강호동프로필.png" alt="강호동" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-muryok">무력형</span>
+                  <span class="badge b-pos">딜러</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">강호동</div>
+          </a>
+          <a href="detail-유재석.html" class="p-card" data-type="지략" data-pos="딜러">
+            <div class="p-thumb">
+              <span class="p-initial">유</span>
+              <img src="img/유재석프로필.png" alt="유재석" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-jiryak">지략형</span>
+                  <span class="badge b-pos">딜러</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">유재석</div>
+          </a>
+          <a href="detail-이경규.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb">
+              <span class="p-initial">이</span>
+              <img src="img/이경규프로필.png" alt="이경규" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-muryok">무력형</span>
+                  <span class="badge b-pos">딜러</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">이경규</div>
+          </a>
+          <a href="detail-신동엽.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">신</span><img src="img/신동엽프로필.png" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">신동엽</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- A -->
+      <div class="tier-block" id="tier-a">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-a">A</span>
+          <span class="tb-name">예능 장군</span>
+          <span class="tb-desc">예능 프로그램 MC 가능한 수준, 단독 진행은 부족</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">장</span><img src="img/장동민.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">장동민</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">탁</span><img src="img/탁재훈.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">탁재훈</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="지략" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김구라.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">김구라</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">허</span><img src="img/허경환.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">허경환</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">유</span><img src="img/유세윤.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">유세윤</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="지략" data-pos="서포터">
+            <div class="p-thumb"><span class="p-initial">전</span><img src="img/전현무.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">서포터</span></div></div></div>
+            <div class="p-name">전현무</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="지략" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">서</span><img src="img/서장훈.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">서장훈</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">이</span><img src="img/이수근.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">이수근</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">하</span><img src="img/하하.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">하하</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">노</span><img src="img/노홍철.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">노홍철</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="지략" data-pos="서포터">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김국진.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">서포터</span></div></div></div>
+            <div class="p-name">김국진</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="지략" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">정</span><img src="img/정형돈.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">정형돈</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="tier-block" id="tier-b">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-b">B</span>
+          <span class="tb-name">예능 용병</span>
+          <span class="tb-desc">게스트 및 고정 멤버 모두 참여 가능, 제 몫의 웃음분량 만들 수 있는 수준</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">박</span><img src="img/박명수.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">박명수</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">정</span><img src="img/정준하.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">정준하</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">문</span><img src="img/문세윤.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">문세윤</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="스틸러">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김종민.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">스틸러</span></div></div></div>
+            <div class="p-name">김종민</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">이</span><img src="img/이광수.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">이광수</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김영철.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">김영철</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="스틸러">
+            <div class="p-thumb"><span class="p-initial">지</span><img src="img/지상렬.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">스틸러</span></div></div></div>
+            <div class="p-name">지상렬</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="지략" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">지</span><img src="img/지석진.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">지석진</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">신</span><img src="img/신기루.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">신기루</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="지략" data-pos="서포터">
+            <div class="p-thumb"><span class="p-initial">장</span><img src="img/장도연.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">서포터</span></div></div></div>
+            <div class="p-name">장도연</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">신</span><img src="img/신봉선.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">신봉선</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">조</span><img src="img/조세호.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">조세호</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김희철.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">김희철</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">데</span><img src="img/데프콘.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">데프콘</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="tier-block" id="tier-c">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-c">C</span>
+          <span class="tb-name">예능 병사</span>
+          <span class="tb-desc">게스트로 참여하여 간간히 웃음을 만들어 낼 수 있는 수준, 고정멤버로는 부족</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="탱커">
+            <div class="p-thumb">
+              <span class="p-initial">황</span>
+              <img src="img/황광희.jpg" alt="황광희" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-bonneung">본능형</span>
+                  <span class="badge b-pos">탱커</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">황광희</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">딘</span><img src="img/딘딘.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">딘딘</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">이</span><img src="img/이상민.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">이상민</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="스틸러">
+            <div class="p-thumb"><span class="p-initial">민</span><img src="img/민경훈.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">스틸러</span></div></div></div>
+            <div class="p-name">민경훈</div>
+          </a>
+          <a href="detail.html" class="p-card" data-type="무력" data-pos="스틸러">
+            <div class="p-thumb"><span class="p-initial">길</span><img src="img/길.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">스틸러</span></div></div></div>
+            <div class="p-name">길</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- D -->
+      <div class="tier-block" id="tier-d">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-d">D</span>
+          <span class="tb-name">예능 훈련병</span>
+          <span class="tb-desc">예능의 의지와 열정이 있는 수준</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb">
+              <span class="p-initial">윤</span>
+              <img src="img/윤형빈.jpg" alt="윤형빈" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-bonneung">본능형</span>
+                  <span class="badge b-pos">딜러</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">윤형빈</div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="no-results" id="no-results">검색 결과가 없습니다.</div>
+
+  </section>
+
+  <!-- 푸터 -->
+  <footer>
+    <div class="footer-logo">KET</div>
+    <div class="footer-scroll" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+    <div class="footer-copy">K-Enter Tier · 한국 예능의 공식 기록</div>
+  </footer>
+
+  <script>
+    /* 카드 아래에 유형·포지션 배지 주입 */
+    document.querySelectorAll('.p-card').forEach(card => {
+      const hoverBadges = card.querySelector('.p-hover-badges');
+      if (!hoverBadges) return;
+      const meta = document.createElement('div');
+      meta.className = 'p-meta';
+      meta.innerHTML = hoverBadges.innerHTML;
+      card.querySelector('.p-name')?.after(meta);
+    });
+
+    /* 가이드 토글 */
+    document.getElementById('guide-toggle').addEventListener('click', function () {
+      this.classList.toggle('open');
+      document.getElementById('guide-body').classList.toggle('open');
+    });
+
+    const state = { type: 'all', pos: null };
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const group = btn.dataset.filter;
+        const val   = btn.dataset.val;
+
+        if (group === 'pos' && state.pos === val) {
+          state.pos = null;
+          btn.classList.remove('active');
+        } else {
+          btn.closest('.filter-row').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          state[group] = val;
+        }
+
+        applyFilter();
+      });
+    });
+
+    /* 검색 */
+    document.getElementById('search-input').addEventListener('input', function() {
+      const q = this.value.trim().toLowerCase();
+      document.querySelectorAll('.p-card').forEach(card => {
+        const name = card.querySelector('.p-name')?.textContent.toLowerCase() || '';
+        card.dataset.searchHide = q && !name.includes(q) ? '1' : '';
+      });
+      applyFilter();
+    });
+
+    function applyFilter() {
+      let anyVisible = false;
+
+      document.querySelectorAll('.tier-block').forEach(block => {
+        const cards = block.querySelectorAll('.p-card');
+        let blockVisible = false;
+
+        cards.forEach(card => {
+          const types   = (card.dataset.type || '').split(',');
+          const pos     = card.dataset.pos || '';
+          const typeOk  = state.type === 'all' || types.some(t => t.includes(state.type));
+          const posOk   = !state.pos || pos === state.pos;
+          const searchOk = !card.dataset.searchHide;
+          const show    = typeOk && posOk && searchOk;
+          card.style.display = show ? '' : 'none';
+          if (show) blockVisible = true;
+        });
+
+        block.style.display = blockVisible ? '' : 'none';
+        if (blockVisible) anyVisible = true;
+      });
+
+      document.getElementById('no-results').style.display = anyVisible ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>

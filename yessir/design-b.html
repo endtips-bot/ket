@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>디자인 B — 밀리터리 커맨드</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #080c08;
+      color: #c8d4b8;
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #0a0e0a;
+      border-bottom: 1px solid #1e2e1a;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 4px;
+      color: #ca8a04;
+    }
+
+    .logo span { color: #4d7c0f; }
+
+    nav a {
+      color: #4a5e3a;
+      text-decoration: none;
+      margin-left: 32px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover, nav a.active { color: #ca8a04; }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px 36px;
+      position: relative;
+      border-bottom: 1px solid #1e2e1a;
+    }
+
+    .hero-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: #4d7c0f;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #e8ddb8;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em {
+      color: #ca8a04;
+      font-style: normal;
+    }
+
+    .hero p {
+      font-family: 'Share Tech Mono', monospace;
+      color: #3a4e2a;
+      font-size: 11px;
+      letter-spacing: 3px;
+    }
+
+    .filters {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 28px 20px;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: #2d4a20;
+      letter-spacing: 2px;
+      margin-right: 4px;
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid #1e2e1a;
+      color: #4a5e3a;
+      padding: 6px 16px;
+      border-radius: 2px;
+      font-size: 11px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: 'Share Tech Mono', monospace;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover { border-color: #4d7c0f; color: #86a868; }
+    .filter-btn.active {
+      background: #1a2a10;
+      border-color: #4d7c0f;
+      color: #ca8a04;
+    }
+
+    .tier-table {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .tier-row {
+      display: flex;
+      align-items: stretch;
+      background: #0c100c;
+      border: 1px solid #1e2e1a;
+      border-left: 3px solid transparent;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .tier-s { border-left-color: #ca8a04; }
+    .tier-a { border-left-color: #4d7c0f; }
+    .tier-b { border-left-color: #2d4a20; }
+    .tier-c { border-left-color: #1e2e1a; }
+    .tier-d { border-left-color: #141e10; }
+
+    .tier-row:hover { background: #0f140f; }
+
+    .tier-label {
+      width: 88px;
+      min-width: 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 0;
+      border-right: 1px solid #1e2e1a;
+    }
+
+    .tier-grade {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .tier-name {
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      margin-top: 6px;
+      opacity: 0.7;
+      text-align: center;
+    }
+
+    .tier-s .tier-grade { color: #ca8a04; text-shadow: 0 0 12px rgba(202,138,4,0.4); }
+    .tier-a .tier-grade { color: #86a868; }
+    .tier-b .tier-grade { color: #4d7c0f; }
+    .tier-c .tier-grade { color: #2d4a20; }
+    .tier-d .tier-grade { color: #1e2e1a; }
+
+    .tier-s .tier-name { color: #ca8a04; }
+    .tier-a .tier-name { color: #4d7c0f; }
+    .tier-b .tier-name, .tier-c .tier-name, .tier-d .tier-name { color: #2d4a20; }
+
+    .tier-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 14px 16px;
+      align-items: center;
+    }
+
+    .card {
+      background: #111811;
+      border: 1px solid #1e2e1a;
+      border-radius: 2px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      border-color: #4d7c0f;
+      background: #141e14;
+    }
+
+    .card-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 2px;
+      background: #1a2a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      border: 1px solid #2d4a20;
+    }
+
+    .card-name { font-size: 13px; font-weight: 700; color: #c8d4b8; margin-bottom: 4px; }
+
+    .card-tags { display: flex; gap: 4px; }
+
+    .tag {
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 1px;
+      font-family: 'Share Tech Mono', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-type { background: rgba(202,138,4,0.1); color: #a87a04; border: 1px solid rgba(202,138,4,0.2); }
+    .tag-pos  { background: rgba(77,124,15,0.1); color: #4d7c0f; border: 1px solid rgba(77,124,15,0.2); }
+
+    .design-label {
+      text-align: center;
+      padding: 12px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: #1e2e1a;
+      letter-spacing: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">예<span>썰</span> TIER</div>
+    <nav>
+      <a href="#" class="active">티어표</a>
+      <a href="#">루북</a>
+      <a href="#">채널</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="hero-label">// CLASSIFIED DOCUMENT //</div>
+    <h1>K-예능인 <em>티어표</em></h1>
+    <p>LAST UPDATED · 2024.05.24 · WEEKLY</p>
+  </div>
+
+  <div class="filters">
+    <div class="filter-group">
+      <span class="filter-label">유형</span>
+      <button class="filter-btn active">전체</button>
+      <button class="filter-btn">무력형</button>
+      <button class="filter-btn">지력형</button>
+      <button class="filter-btn">본능형</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">포지션</span>
+      <button class="filter-btn">탱커</button>
+      <button class="filter-btn">딜러</button>
+      <button class="filter-btn">서포터</button>
+      <button class="filter-btn">스틸러</button>
+    </div>
+  </div>
+
+  <div class="tier-table">
+    <div class="tier-row tier-s">
+      <div class="tier-label">
+        <div class="tier-grade">S</div>
+        <div class="tier-name">예능대장군</div>
+      </div>
+      <div class="tier-cards">
+        <a href="#" class="card"><div class="card-avatar">🔥</div><div><div class="card-name">강호동</div><div class="card-tags"><span class="tag tag-type">무력+본능</span><span class="tag tag-pos">딜러</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">👑</div><div><div class="card-name">유재석</div><div class="card-tags"><span class="tag tag-type">지력</span><span class="tag tag-pos">딜러</span></div></div></a>
+      </div>
+    </div>
+
+    <div class="tier-row tier-a">
+      <div class="tier-label">
+        <div class="tier-grade">A</div>
+        <div class="tier-name">예능장군</div>
+      </div>
+      <div class="tier-cards">
+        <a href="#" class="card"><div class="card-avatar">⚡</div><div><div class="card-name">장동민</div><div class="card-tags"><span class="tag tag-type">본능</span><span class="tag tag-pos">딜러</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🎯</div><div><div class="card-name">탁재훈</div><div class="card-tags"><span class="tag tag-type">본능</span><span class="tag tag-pos">딜러</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🗡️</div><div><div class="card-name">김구라</div><div class="card-tags"><span class="tag tag-type">지력</span><span class="tag tag-pos">딜러</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🥊</div><div><div class="card-name">허경환</div><div class="card-tags"><span class="tag tag-type">지력</span><span class="tag tag-pos">탱커</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🎵</div><div><div class="card-name">유세윤</div><div class="card-tags"><span class="tag tag-type">무력</span><span class="tag tag-pos">딜러</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🎙️</div><div><div class="card-name">전현무</div><div class="card-tags"><span class="tag tag-type">지력</span><span class="tag tag-pos">딜러</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🏀</div><div><div class="card-name">서장훈</div><div class="card-tags"><span class="tag tag-type">지력</span><span class="tag tag-pos">탱커</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">⚔️</div><div><div class="card-name">이수근</div><div class="card-tags"><span class="tag tag-type">본능</span><span class="tag tag-pos">딜러</span></div></div></a>
+      </div>
+    </div>
+
+    <div class="tier-row tier-b">
+      <div class="tier-label">
+        <div class="tier-grade">B</div>
+        <div class="tier-name">예능용병</div>
+      </div>
+      <div class="tier-cards">
+        <a href="#" class="card"><div class="card-avatar">💪</div><div><div class="card-name">박명수</div><div class="card-tags"><span class="tag tag-type">무력+본능</span><span class="tag tag-pos">딜러</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🛡️</div><div><div class="card-name">정준하</div><div class="card-tags"><span class="tag tag-type">무력</span><span class="tag tag-pos">탱커</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🎭</div><div><div class="card-name">문세윤</div><div class="card-tags"><span class="tag tag-type">무력</span><span class="tag tag-pos">딜러</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🃏</div><div><div class="card-name">김종민</div><div class="card-tags"><span class="tag tag-type">본능</span><span class="tag tag-pos">탱커</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🏃</div><div><div class="card-name">이광수</div><div class="card-tags"><span class="tag tag-type">본능</span><span class="tag tag-pos">탱커</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🎤</div><div><div class="card-name">김영철</div><div class="card-tags"><span class="tag tag-type">무력</span><span class="tag tag-pos">탱커</span></div></div></a>
+        <a href="#" class="card"><div class="card-avatar">🎪</div><div><div class="card-name">지상렬</div><div class="card-tags"><span class="tag tag-type">본능</span><span class="tag tag-pos">스틸러</span></div></div></a>
+      </div>
+    </div>
+
+    <div class="tier-row tier-c">
+      <div class="tier-label">
+        <div class="tier-grade">C</div>
+        <div class="tier-name">예능병사</div>
+      </div>
+      <div class="tier-cards">
+        <a href="#" class="card" style="opacity:0.4"><div class="card-avatar">👤</div><div><div class="card-name">추가 예정</div></div></a>
+      </div>
+    </div>
+
+    <div class="tier-row tier-d">
+      <div class="tier-label">
+        <div class="tier-grade">D</div>
+        <div class="tier-name">예능훈련병</div>
+      </div>
+      <div class="tier-cards">
+        <a href="#" class="card" style="opacity:0.4"><div class="card-avatar">👤</div><div><div class="card-name">추가 예정</div></div></a>
+      </div>
+    </div>
+  </div>
+
+  <p class="design-label">// DESIGN GUIDE B — 밀리터리 커맨드 //</p>
+
+</body>
+</html>
