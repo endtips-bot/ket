@@ -36,12 +36,15 @@
     }
     .hero-backdrop-initial { font-size:clamp(120px,25vw,280px); font-weight:900; color:rgba(255,255,255,0.03); user-select:none; position:absolute; }
     .hero-overlay { position:absolute; inset:0; background:linear-gradient(77deg,rgba(20,20,20,0.95) 0%,rgba(20,20,20,0.7) 40%,rgba(20,20,20,0.2) 70%),linear-gradient(180deg,rgba(0,0,0,0.2) 0%,#141414 100%); }
-    .hero-content { position:absolute; bottom:12%; left:4%; z-index:2; max-width:600px; }
+    .hero-inner { position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:1200px; }
+    .hero-photo { position:absolute; bottom:12%; right:4vw; width:clamp(160px,22vw,290px); aspect-ratio:1/1; border-radius:8px; overflow:hidden; box-shadow:0 8px 48px rgba(0,0,0,0.8); z-index:2; }
+    .hero-photo img { width:100%; height:100%; object-fit:cover; object-position:top center; }
+    .hero-content { position:absolute; bottom:12%; left:4vw; z-index:2; max-width:600px; }
     .hero-badges { display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
     .hero-tier-badge { font-size:11px; font-weight:900; padding:4px 12px; border-radius:3px; letter-spacing:1.5px; }
     .htb-s { background:var(--red); color:#fff; }
     .hero-rank-badge { font-size:11px; font-weight:700; color:var(--text-dim); padding:4px 12px; border:1px solid var(--border); border-radius:3px; }
-    .hero-name { font-size:clamp(36px,6vw,64px); font-weight:900; line-height:1.05; letter-spacing:-1.5px; margin-bottom:10px; text-shadow:2px 4px 16px rgba(0,0,0,0.6); }
+    .hero-name { font-size:clamp(36px,6vw,64px); font-weight:900; line-height:1.05; letter-spacing:-1.5px; margin-bottom:20px; text-shadow:2px 4px 16px rgba(0,0,0,0.6); }
     .hero-meta { display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
     .hero-meta-score { color:var(--red); font-size:15px; font-weight:700; }
     .hero-meta-dot { width:4px; height:4px; border-radius:50%; background:var(--text-mute); }
@@ -53,8 +56,8 @@
     .btn-secondary { display:inline-flex; align-items:center; gap:8px; background:rgba(109,109,110,0.7); color:#fff; font-size:14px; font-weight:700; padding:10px 22px; border-radius:3px; border:none; cursor:pointer; font-family:inherit; transition:background 0.15s; }
     .btn-secondary:hover { background:rgba(109,109,110,0.5); }
 
-    .detail-body { padding:0 4% 80px; display:grid; grid-template-columns:1fr 340px; gap:40px; max-width:1200px; }
-    .eval-section { margin-bottom:32px; }
+    .detail-body { padding:20px 4% 80px; display:grid; grid-template-columns:1fr 340px; gap:40px; max-width:1200px; margin:0 auto; }
+    .eval-section { margin-bottom:40px; }
     .eval-text { font-size:15px; line-height:1.85; color:var(--text-dim); max-width:600px; }
     .eval-text strong { color:var(--text); font-weight:700; }
     .verdict-box { margin-top:20px; padding:16px 20px; border-left:3px solid var(--red); background:rgba(29,107,243,0.06); border-radius:0 6px 6px 0; }
@@ -64,7 +67,7 @@
     .fill-red { background:#e50914; } .fill-orange { background:#f97316; } .fill-amber { background:#f59e0b; }
     .fill-blue { background:#3b82f6; } .fill-purple { background:#8b5cf6; } .fill-green { background:#22c55e; } .fill-cyan { background:#06b6d4; }
 
-    .stats-layout { display:grid; grid-template-columns:1fr 253px; gap:20px; align-items:center; max-width:680px; margin-bottom:32px; }
+    .stats-layout { display:grid; grid-template-columns:1fr 253px; gap:20px; align-items:center; max-width:680px; margin-bottom:40px; }
     .stat-cards-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
     .stat-card { background:var(--surface); border-radius:6px; padding:11px 13px 9px; }
     .stat-card-name { font-size:10px; font-weight:700; color:var(--text-mute); margin-bottom:4px; }
@@ -74,14 +77,14 @@
     .radar-wrap { display:flex; flex-direction:column; align-items:center; gap:8px; }
     .radar-caption { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--text-mute); }
 
-    .pros-cons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:32px; }
+    .pros-cons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:40px; }
     .pc-block { background:var(--surface); border-radius:4px; padding:16px 18px; }
     .pc-title { font-size:10px; font-weight:700; letter-spacing:1.5px; margin-bottom:10px; }
     .pc-pros .pc-title { color:#4ade80; } .pc-cons .pc-title { color:#f87171; }
     .pc-item { font-size:13px; color:var(--text-dim); line-height:1.8; display:flex; gap:8px; }
     .pc-item::before { content:'·'; color:var(--text-mute); flex-shrink:0; }
 
-    .programs-section { margin-bottom:32px; }
+    .programs-section { margin-bottom:40px; }
     .program-list { display:flex; flex-direction:column; gap:2px; }
     .program-item { display:flex; align-items:center; gap:14px; padding:12px 14px; border-radius:4px; font-size:14px; transition:background 0.15s; cursor:default; }
     .program-item:hover { background:var(--surface); }
@@ -143,27 +146,16 @@
       <img src="../img/profile/이경규프사1.webp" alt="이경규" onerror="this.style.display='none'">
     </div>
     <div class="hero-overlay"></div>
+    <div class="hero-inner">
     <div class="hero-photo"><img src="../img/profile/이경규프사1.webp" alt=""></div>
     <div class="hero-content">
+      <div class="hero-name">이경규</div>
       <div class="hero-badges">
         <span class="hero-tier-badge htb-s">S TIER</span>
         <span class="hero-rank-badge">예능 대장군</span>
         <span class="hero-rank-badge">무력형 · 딜러</span>
       </div>
-      <div class="hero-name">이경규</div>
-      <div class="hero-meta">
-        <span class="hero-meta-score">94점</span>
-        <div class="hero-meta-dot"></div>
-        <span class="hero-meta-item">개그맨 출신</span>
-        <div class="hero-meta-dot"></div>
-        <span class="hero-meta-item">1984 — 현재</span>
-        <div class="hero-meta-dot"></div>
-        <span class="hero-meta-tag">딜러</span>
-      </div>
-      <div class="hero-actions">
-        <button class="btn-primary">▶ &nbsp;분석 영상 보기</button>
-        <button class="btn-secondary" onclick="history.back()">← &nbsp;티어표</button>
-      </div>
+    </div>
     </div>
   </div>
 
@@ -171,7 +163,7 @@
     <div class="detail-main">
 
       <div class="eval-section">
-        <div class="section-label">예썰 평가</div>
+        <div class="section-label">예능인 분석</div>
         <p class="eval-text">
           <strong>이경규</strong>는 한국 예능 <strong>포맷 혁신의 아버지</strong>이자 무력형 딜러의 완성형이다.
           몰카 예능의 개척, 복면가왕 포맷 기획, 이경규가 간다의 리얼리티 형식까지 —
@@ -182,11 +174,11 @@
           무력형 딜러의 특성을 40년 이상 유지하는 현역 S급 예능인.
         </p>
         <div class="verdict-box">
-          <p>판결 — "직접 뛰어들고 직접 터뜨린다.<br>포맷 혁신과 무력 딜링의 결합, 예능계의 선구자."</p>
+          <p>정리 — "직접 뛰어들고 직접 터뜨린다.<br>포맷 혁신과 무력 딜링의 결합, 예능계의 선구자."</p>
         </div>
       </div>
 
-      <div class="section-label">ABILITY STATS</div>
+      <div class="section-label">예능 스탯</div>
       <div class="stats-layout">
         <div class="stat-cards-grid">
           <div class="stat-card">
@@ -226,7 +218,7 @@
         </div>
       </div>
 
-      <div class="section-label">STRENGTHS & WEAKNESSES</div>
+      <div class="section-label">예능인 장·단점</div>
       <div class="pros-cons">
         <div class="pc-block pc-pros">
           <div class="pc-title">강점 PROS</div>

@@ -136,12 +136,22 @@
     }
 
     
+    /* 히어로 내부 정렬 컨테이너 */
+    .hero-inner {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1200px;
+    }
+
     /* 히어로 프로필 사진 카드 */
     .hero-photo {
       position: absolute;
-      top: 50%;
-      right: 4%;
-      transform: translateY(-50%);
+      bottom: 12%;
+      right: 4vw;
       width: clamp(160px, 22vw, 290px);
       aspect-ratio: 1 / 1;
       border-radius: 8px;
@@ -156,11 +166,12 @@
       object-fit: cover;
       object-position: top center;
     }
-/* 히어로 콘텐츠 */
+
+    /* 히어로 콘텐츠 */
     .hero-content {
       position: absolute;
       bottom: 12%;
-      left: 4%;
+      left: 4vw;
       z-index: 2;
       max-width: 600px;
     }
@@ -214,7 +225,7 @@
       font-weight: 900;
       line-height: 1.05;
       letter-spacing: -1.5px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       text-shadow: 2px 4px 16px rgba(0,0,0,0.6);
     }
 
@@ -295,18 +306,19 @@
        상세 정보 본문
     ══════════════════════════ */
     .detail-body {
-      padding: 0 4% 80px;
+      padding: 20px 4% 80px;
       display: grid;
       grid-template-columns: 1fr 340px;
       gap: 40px;
       max-width: 1200px;
+      margin: 0 auto;
     }
 
     /* 왼쪽: 주요 정보 */
     .detail-main {}
 
     /* 평가 텍스트 */
-    .eval-section { margin-bottom: 32px; }
+    .eval-section { margin-bottom: 40px; }
 
     .eval-text {
       font-size: 15px;
@@ -397,7 +409,7 @@
       gap: 20px;
       align-items: center;
       max-width: 680px;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
     }
 
     .stat-cards-grid {
@@ -469,7 +481,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
     }
 
     .pc-block {
@@ -499,7 +511,7 @@
     .pc-item::before { content: '·'; color: var(--text-mute); flex-shrink: 0; }
 
     /* 대표 프로그램 */
-    .programs-section { margin-bottom: 32px; }
+    .programs-section { margin-bottom: 40px; }
 
     .program-list { display: flex; flex-direction: column; gap: 2px; }
 
@@ -672,31 +684,16 @@
       <img src="../img/profile/강호동프사1.webp" alt="강호동" onerror="this.style.display='none'">
     </div>
     <div class="hero-overlay"></div>
+    <div class="hero-inner">
     <div class="hero-photo"><img src="../img/profile/강호동프사1.webp" alt=""></div>
-
     <div class="hero-content">
+      <div class="hero-name">강호동</div>
       <div class="hero-badges">
         <span class="hero-tier-badge htb-s">S TIER</span>
         <span class="hero-rank-badge">예능 대장군</span>
         <span class="hero-rank-badge">무력형 · 딜러</span>
       </div>
-
-      <div class="hero-name">강호동</div>
-
-      <div class="hero-meta">
-        <span class="hero-meta-score">98점</span>
-        <div class="hero-meta-dot"></div>
-        <span class="hero-meta-item">운동선수 출신</span>
-        <div class="hero-meta-dot"></div>
-        <span class="hero-meta-item">1999 — 현재</span>
-        <div class="hero-meta-dot"></div>
-        <span class="hero-meta-tag">딜러</span>
-      </div>
-
-      <div class="hero-actions">
-        <button class="btn-primary">▶ &nbsp;분석 영상 보기</button>
-        <button class="btn-secondary" onclick="history.back()">← &nbsp;티어표</button>
-      </div>
+    </div>
     </div>
   </div>
 
@@ -708,7 +705,7 @@
 
       <!-- 평가 -->
       <div class="eval-section">
-        <div class="section-label">예썰 평가</div>
+        <div class="section-label">예능인 분석</div>
         <p class="eval-text">
           <strong>강호동</strong>은 K-예능 역사상 가장 강력한 <strong>무력+본능형 딜러</strong>다.
           씨름 선수 출신의 압도적인 신체 에너지와 타고난 본능적 반응이 결합되어,
@@ -720,12 +717,12 @@
           시대를 가로지르며 S급 포지션을 유지 중이다.
         </p>
         <div class="verdict-box">
-          <p>판결 — "혼자서 프로그램을 운영하는 유일한 수준의 구심력.<br>무력과 본능이 결합된 최고급 딜러."</p>
+          <p>정리 — "혼자서 프로그램을 운영하는 유일한 수준의 구심력.<br>무력과 본능이 결합된 최고급 딜러."</p>
         </div>
       </div>
 
       <!-- 어빌리티 스탯 -->
-      <div class="section-label">ABILITY STATS</div>
+      <div class="section-label">예능 스탯</div>
       <div class="stats-layout">
         <div class="stat-cards-grid">
           <div class="stat-card">
@@ -766,7 +763,7 @@
       </div>
 
       <!-- 강점/약점 -->
-      <div class="section-label">STRENGTHS & WEAKNESSES</div>
+      <div class="section-label">예능인 장·단점</div>
       <div class="pros-cons">
         <div class="pc-block pc-pros">
           <div class="pc-title">강점 PROS</div>
