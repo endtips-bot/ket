@@ -3,517 +3,1112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>예썰 — 예능인 티어표</title>
+  <title>KET — K-Enter Tier</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      background-color: #0d0d1a;
-      color: #e0e0e0;
-      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-      min-height: 100vh;
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #141414;
+      --surface2:  #1e1e1e;
+      --surface3:  #262626;
+      --border:    #2a2a2a;
+      --border2:   #383838;
+      --red:       #e50914;
+      --red-h:     #ff2030;
+      --text:      #ffffff;
+      --text-dim:  #b3b3b3;
+      --text-mute: #666666;
     }
 
-    /* 헤더 */
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════
+       GNB
+    ═══════════════════════ */
     header {
-      background: #11112a;
-      border-bottom: 1px solid #2a2a4a;
-      padding: 16px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 300;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .gnb-inner {
+      width: 100%;
+      display: flex;
+      align-items: stretch;
     }
 
     .logo {
-      font-size: 22px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px 0 6%;
+      font-size: 20px;
       font-weight: 900;
       letter-spacing: 2px;
-      color: #fff;
-    }
-
-    .logo span {
-      color: #a855f7;
-    }
-
-    nav a {
-      color: #aaa;
+      color: var(--text);
       text-decoration: none;
-      margin-left: 28px;
-      font-size: 14px;
-      transition: color 0.2s;
-    }
-
-    nav a:hover { color: #fff; }
-    nav a.active { color: #a855f7; font-weight: 700; }
-
-    /* 히어로 */
-    .hero {
-      text-align: center;
-      padding: 52px 20px 32px;
-    }
-
-    .hero h1 {
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .hero h1 em {
-      color: #a855f7;
-      font-style: normal;
-    }
-
-    .hero p {
-      color: #666;
-      font-size: 13px;
-    }
-
-    /* 필터 탭 */
-    .filters {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding: 0 20px 32px;
-    }
-
-    .filter-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .filter-label {
-      font-size: 10px;
-      color: #444;
-      letter-spacing: 2px;
-      margin-right: 4px;
-      min-width: 36px;
-      text-align: right;
-    }
-
-    .filter-btn {
-      background: #1a1a2e;
-      border: 1px solid #2a2a4a;
-      color: #aaa;
-      padding: 8px 20px;
-      border-radius: 20px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover {
-      border-color: #a855f7;
-      color: #fff;
-    }
-
-    .filter-btn.active {
-      background: #a855f7;
-      border-color: #a855f7;
-      color: #fff;
-      font-weight: 700;
-    }
-
-    /* 티어 테이블 */
-    .tier-table {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .tier-row {
-      display: flex;
-      align-items: center;
-      background: #13132a;
-      border: 1px solid #2a2a4a;
-      border-radius: 8px;
-      min-height: 80px;
-      overflow: hidden;
-    }
-
-    .tier-label {
-      width: 72px;
-      min-width: 72px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      font-weight: 900;
-      padding: 16px 0;
-      border-right: 1px solid #2a2a4a;
-    }
-
-    .tier-label small {
-      font-size: 10px;
-      font-weight: 400;
-      margin-top: 2px;
-      letter-spacing: 1px;
-    }
-
-    .tier-s .tier-label { background: rgba(255, 215, 0, 0.12); color: #ffd700; }
-    .tier-a .tier-label { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
-    .tier-b .tier-label { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
-    .tier-c .tier-label { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
-    .tier-d .tier-label { background: rgba(107, 114, 128, 0.12); color: #6b7280; }
-
-    .tier-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 12px 16px;
-    }
-
-    /* 예능인 카드 */
-    .card {
-      background: #1e1e38;
-      border: 1px solid #2a2a4a;
-      border-radius: 8px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-decoration: none;
-      color: inherit;
-      min-width: 120px;
-    }
-
-    .card:hover {
-      border-color: #a855f7;
-      background: #252545;
-      transform: translateY(-2px);
-    }
-
-    .card-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #2a2a4a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
       flex-shrink: 0;
     }
 
-    .card-info {
+    nav { display: flex; align-items: stretch; }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      min-width: 64px;
+      text-decoration: none;
+      color: var(--text-mute);
+      font-size: 13px;
+      font-weight: 700;
+      transition: color 0.15s, background 0.15s;
+      border-right: 1px solid var(--border);
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .nav-tab:first-child { border-left: 1px solid var(--border); }
+    .nav-tab:hover { color: var(--text); background: var(--surface); }
+
+    .nav-tab.active {
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .gnb-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 6%;
+    }
+
+    .gnb-search-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .gnb-search-wrap:focus-within { border-color: #555; }
+
+    .gnb-search-icon { padding: 0 10px; color: var(--text-mute); font-size: 14px; }
+
+    .gnb-search {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 13px;
+      padding: 7px 12px 7px 0;
+      width: 200px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .gnb-search::placeholder { color: var(--text-mute); }
+
+    .gnb-menu {
+      width: 34px; height: 34px;
+      border-radius: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      letter-spacing: 2px;
+    }
+
+    .gnb-menu:hover { background: var(--surface3); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 16px;
+    }
+
+    /* ═══════════════════════
+       히어로
+    ═══════════════════════ */
+    .hero {
+      position: relative;
+      height: 52vw;
+      max-height: 560px;
+      min-height: 340px;
+      background: #060606;
+      overflow: hidden;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-bg-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.88);
+      transform: scale(1.02);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg,
+          rgba(6,6,6,1)    0%,
+          rgba(6,6,6,0.92) 20%,
+          rgba(6,6,6,0.6)  42%,
+          rgba(6,6,6,0.1)  65%,
+          transparent      80%
+        ),
+        linear-gradient(180deg,
+          rgba(6,6,6,0.3)  0%,
+          transparent      15%,
+          transparent      72%,
+          rgba(6,6,6,0.7)  88%,
+          #0a0a0a          100%
+        );
+    }
+
+    .hero-content {
+      position: absolute;
+      left: 6%; top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      max-width: 520px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 2px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    .hero-name {
+      font-size: clamp(36px, 6vw, 68px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(18px, 3vw, 36px);
+      font-weight: 500;
+      color: #f0b429;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      max-width: 400px;
+    }
+
+    .hero-actions { display: flex; gap: 10px; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--red);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--red-h); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+    .hero-play {
+      position: absolute;
+      right: 10%; top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
     }
 
-    .card-name {
-      font-size: 14px;
-      font-weight: 700;
+    .play-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
       color: #fff;
+      padding-left: 5px;
+      transition: border-color 0.2s, transform 0.2s;
     }
 
-    .card-tags {
+    .hero-play:hover .play-circle { border-color: #fff; transform: scale(1.1); }
+    .play-label { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; font-weight: 700; }
+
+    /* ═══════════════════════
+       티어표 섹션
+    ═══════════════════════ */
+    .tier-section {
+      padding: 44px 5% 40px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .section-title { font-size: 20px; font-weight: 900; }
+    .section-title span { color: var(--red); }
+    .section-sub { font-size: 12px; color: var(--text-mute); }
+
+    /* 필터 */
+    .filters-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-row-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-mute);
+      letter-spacing: 1px;
+      width: 44px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .filter-sep { width: 1px; height: 14px; background: var(--border2); }
+
+    .filter-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 5px 15px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .filter-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+    /* 티어 블록 */
+    .tier-blocks { display: flex; flex-direction: column; gap: 28px; }
+
+    .tier-block-hd {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .tb-badge {
+      font-size: 18px;
+      font-weight: 900;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      flex-shrink: 0;
+      letter-spacing: 0;
+    }
+
+    .tb-s { background: rgba(229,9,20,0.22); color: #e50914; border: 1px solid rgba(229,9,20,0.5); box-shadow: 0 0 12px rgba(229,9,20,0.2); }
+    .tb-a { background: rgba(249,115,22,0.18); color: #f97316; border: 1px solid rgba(249,115,22,0.4); box-shadow: 0 0 12px rgba(249,115,22,0.15); }
+    .tb-b { background: rgba(234,179,8,0.16); color: #eab308; border: 1px solid rgba(234,179,8,0.35); box-shadow: 0 0 12px rgba(234,179,8,0.12); }
+    .tb-c { background: rgba(20,184,166,0.15); color: #14b8a6; border: 1px solid rgba(20,184,166,0.35); box-shadow: 0 0 12px rgba(20,184,166,0.1); }
+    .tb-d { background: rgba(99,102,241,0.13); color: #6366f1; border: 1px solid rgba(99,102,241,0.3); box-shadow: 0 0 12px rgba(99,102,241,0.1); }
+
+    .tb-name { font-size: 18px; font-weight: 900; }
+    .tb-desc { font-size: 12px; color: var(--text-mute); }
+
+    /* 카드 그리드 */
+    .tier-cards-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ═══════════════════════
+       프로필 카드 (NEW)
+    ═══════════════════════ */
+    .p-card {
+      position: relative;
+      width: 155px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.18s, box-shadow 0.18s;
+    }
+
+    .p-card:hover {
+      border-bottom-color: var(--red);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+
+    /* 썸네일 영역 */
+    .p-thumb {
+      position: relative;
+      aspect-ratio: 1.4 / 1;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* 큰 이니셜 */
+    .p-initial {
+      font-size: 52px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.09);
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+      position: absolute;
+    }
+
+    /* 실제 사진 */
+    .p-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      z-index: 1;
+    }
+
+    /* 호버 배지 오버레이 */
+    .p-hover-info {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 40%, rgba(0,0,0,0.75) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8px;
+      opacity: 0;
+      transition: opacity 0.18s;
+      z-index: 2;
+    }
+
+    .p-card:hover .p-hover-info { opacity: 1; }
+
+    .p-hover-badges {
       display: flex;
       gap: 4px;
+      flex-wrap: wrap;
     }
 
-    .tag {
-      font-size: 10px;
-      padding: 1px 6px;
+    /* 이름 바 */
+    .p-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px 10px 9px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: transparent;
+      z-index: 3;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.95);
+      transition: opacity 0.18s;
+    }
+
+    .p-card:hover .p-name { opacity: 0; }
+
+    /* 유형 배지 */
+    .badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .b-jiryak   { color: #60a5fa; background: rgba(37,99,235,0.5); }
+    .b-muryok   { color: #fdba74; background: rgba(194,65,12,0.6); }
+    .b-bonneung { color: #d8b4fe; background: rgba(126,34,206,0.5); }
+    .b-pos      { color: #d4d4d4; background: rgba(255,255,255,0.12); }
+
+    /* 빈 카드 */
+    .p-card-empty {
+      width: 155px;
+      background: var(--surface2);
       border-radius: 4px;
-      font-weight: 600;
+      overflow: hidden;
+      opacity: 0.25;
     }
 
-    .tag-type {
-      background: rgba(168, 85, 247, 0.2);
-      color: #c084fc;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-    }
-
-    .tag-pos {
-      background: rgba(59, 130, 246, 0.2);
-      color: #60a5fa;
-      border: 1px solid rgba(59, 130, 246, 0.3);
-    }
-
-    /* 업데이트 날짜 */
-    .updated {
-      text-align: center;
+    .p-empty-thumb {
+      aspect-ratio: 1;
+      background: #1a1a1a;
+      border: 1px dashed #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #444;
+      font-size: 28px;
+    }
+
+    .p-empty-name {
+      padding: 8px 10px 9px;
       font-size: 12px;
-      padding-bottom: 20px;
+      color: #444;
+    }
+
+    /* ═══════════════════════
+       최근 업로드 섹션
+    ═══════════════════════ */
+    .videos-section { padding: 0 5% 60px; }
+
+    .videos-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .videos-title { font-size: 20px; font-weight: 900; }
+
+    .videos-link {
+      font-size: 12px;
+      color: var(--text-mute);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .videos-link:hover { color: var(--text-dim); }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .video-card {
+      background: var(--surface);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform 0.2s;
+    }
+
+    .video-card:hover { transform: scale(1.03); }
+
+    .video-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.6);
+    }
+
+    .video-play {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+      padding-left: 3px;
+      box-shadow: 0 2px 16px rgba(229,9,20,0.4);
+      transition: transform 0.15s;
+    }
+
+    .video-card:hover .video-play { transform: scale(1.1); }
+
+    .video-new-badge {
+      position: absolute;
+      top: 8px; left: 8px;
+      background: var(--red);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      z-index: 2;
+    }
+
+    .video-info { padding: 10px 12px 12px; }
+
+    .video-title {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.55;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .video-meta { font-size: 11px; color: var(--text-mute); }
+
+    /* ═══════════════════════
+       푸터
+    ═══════════════════════ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-left { display: flex; flex-direction: column; gap: 2px; }
+    .footer-logo { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; }
+    .footer-sub { font-size: 11px; color: var(--text-mute); }
+    .footer-brand { font-size: 20px; font-weight: 900; letter-spacing: 2px; color: var(--text-dim); }
+
+    .footer-scroll {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-mute);
+      cursor: pointer;
+      font-size: 14px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .footer-scroll:hover { border-color: #555; color: var(--text-dim); }
+    .footer-copy { font-size: 11px; color: var(--text-mute); }
+
+    /* ═══════════════════════
+       태블릿 (≤768px)
+    ═══════════════════════ */
+    @media (max-width: 768px) {
+      /* GNB */
+      .nav-label { display: none; }
+      .nav-tab { min-width: 44px; padding: 0 10px; }
+      .gnb-search { width: 120px; }
+
+      /* 히어로 */
+      .hero { height: auto; min-height: 260px; }
+      .hero-play { display: none; }
+      .hero-content {
+        position: relative; top: auto; left: auto;
+        transform: none;
+        padding: 68px 5% 32px;
+        max-width: 100%;
+      }
+      .hero-desc { display: none; }
+
+      /* 티어 */
+      .tier-section { padding: 24px 4% 20px; }
+      .section-title { font-size: 17px; }
+      .tier-block-hd { flex-wrap: wrap; row-gap: 4px; }
+      .tb-desc { width: 100%; padding-left: 52px; font-size: 11px; }
+      .p-card { width: calc(25% - 6px); }
+
+      /* 영상 */
+      .videos-section { padding: 0 4% 36px; }
+      .video-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* 푸터 */
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* ═══════════════════════
+       모바일 (≤480px)
+    ═══════════════════════ */
+    @media (max-width: 480px) {
+      /* GNB */
+      .gnb-search-wrap { display: none; }
+      .logo { font-size: 17px; letter-spacing: 1px; }
+      .nav-tab { min-width: 40px; padding: 0 8px; }
+
+      /* 히어로 */
+      .hero-content { padding: 60px 4% 28px; }
+      .hero-name { letter-spacing: -1px; }
+      .hero-subtitle { font-size: clamp(15px, 4vw, 22px); }
+      .hero-badge { font-size: 9px; }
+      .hero-actions { flex-direction: column; gap: 8px; }
+      .btn-primary, .btn-secondary { justify-content: center; font-size: 12px; }
+
+      /* 티어 */
+      .tier-section { padding: 20px 3% 16px; }
+      .tb-badge { width: 34px; height: 34px; font-size: 15px; }
+      .tb-name { font-size: 15px; }
+      .tb-desc { display: none; }
+      .tier-cards-grid { gap: 5px; }
+      .p-card { width: calc(25% - 4px); }
+      .p-name { font-size: 11px; padding: 5px 6px 6px; }
+
+      /* 영상 */
+      .videos-title { font-size: 16px; }
+      .video-grid { grid-template-columns: 1fr; gap: 8px; }
+
+      /* 푸터 */
+      footer { padding: 16px 4%; }
     }
   </style>
 </head>
 <body>
 
+  <!-- GNB -->
   <header>
-    <div class="logo">예<span>썰</span> TIER</div>
-    <nav>
-      <a href="index.html" class="active">티어표</a>
-      <a href="#">루북</a>
-      <a href="#">유튜브 채널</a>
-    </nav>
+    <div class="gnb-inner">
+      <a href="#" class="logo">K-Enter Tier</a>
+      <nav>
+        <a href="index.html" class="nav-tab active">홈</a>
+        <a href="tier.html" class="nav-tab">티어</a>
+        <a href="youtube.html" class="nav-tab">유튜브</a>
+        <a href="legend.html" class="nav-tab">레전드</a>
+      </nav>
+      <div class="gnb-right">
+        <div class="gnb-search-wrap">
+          <span class="gnb-search-icon">⌕</span>
+          <input class="gnb-search" type="text" placeholder="예능인 검색...">
+        </div>
+      </div>
+      <button class="nav-toggle" id="nav-toggle">☰</button>
+    </div>
   </header>
 
-  <div class="hero">
-    <h1>K-예능인 <em>티어표</em></h1>
-    <p>마지막 업데이트 : 2024.05.24</p>
-  </div>
-
-  <div class="filters">
-    <div class="filter-group">
-      <span class="filter-label">유형</span>
-      <button class="filter-btn active">전체</button>
-      <button class="filter-btn">무력형</button>
-      <button class="filter-btn">지력형</button>
-      <button class="filter-btn">본능형</button>
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="hero-bg-img">
+      <img src="img/유재석.png" alt="" onerror="this.style.display='none'">
     </div>
-    <div class="filter-group">
-      <span class="filter-label">포지션</span>
-      <button class="filter-btn">탱커</button>
-      <button class="filter-btn">딜러</button>
-      <button class="filter-btn">서포터</button>
-      <button class="filter-btn">스틸러</button>
-    </div>
-  </div>
+    <div class="hero-overlay"></div>
 
-  <div class="tier-table">
-
-    <!-- S급 -->
-    <div class="tier-row tier-s">
-      <div class="tier-label">S<small>예능대장군</small></div>
-      <div class="tier-cards">
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🔥</div>
-          <div class="card-info">
-            <span class="card-name">강호동</span>
-            <div class="card-tags">
-              <span class="tag tag-type">무력+본능</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">👑</div>
-          <div class="card-info">
-            <span class="card-name">유재석</span>
-            <div class="card-tags">
-              <span class="tag tag-type">지력</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
+    <div class="hero-content">
+      <div class="hero-badge">티어 분석</div>
+      <div class="hero-name">유재석</div>
+      <div class="hero-subtitle">유재석이 올타임 넘버원<br>S급 예능인인 이유</div>
+      <p class="hero-desc">20년간 예능판을 지배한 MC의 전략을 삼국지 지략형 관점으로 완전 해체 분석. 왜 그는 흔들리지 않는가.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">▶ &nbsp;영상 보기</a>
+        <a href="detail/강호동.html" class="btn-secondary">ℹ &nbsp;프로필 보기</a>
       </div>
     </div>
 
-    <!-- A급 -->
-    <div class="tier-row tier-a">
-      <div class="tier-label">A<small>예능장군</small></div>
-      <div class="tier-cards">
-        <a href="detail.html" class="card">
-          <div class="card-avatar">⚡</div>
-          <div class="card-info">
-            <span class="card-name">장동민</span>
-            <div class="card-tags">
-              <span class="tag tag-type">본능</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🎯</div>
-          <div class="card-info">
-            <span class="card-name">탁재훈</span>
-            <div class="card-tags">
-              <span class="tag tag-type">본능</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🎙️</div>
-          <div class="card-info">
-            <span class="card-name">전현무</span>
-            <div class="card-tags">
-              <span class="tag tag-type">지력</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🗡️</div>
-          <div class="card-info">
-            <span class="card-name">김구라</span>
-            <div class="card-tags">
-              <span class="tag tag-type">지력</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🏀</div>
-          <div class="card-info">
-            <span class="card-name">서장훈</span>
-            <div class="card-tags">
-              <span class="tag tag-type">지력</span>
-              <span class="tag tag-pos">탱커</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">⚔️</div>
-          <div class="card-info">
-            <span class="card-name">이수근</span>
-            <div class="card-tags">
-              <span class="tag tag-type">본능</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🎵</div>
-          <div class="card-info">
-            <span class="card-name">유세윤</span>
-            <div class="card-tags">
-              <span class="tag tag-type">무력</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🥊</div>
-          <div class="card-info">
-            <span class="card-name">허경환</span>
-            <div class="card-tags">
-              <span class="tag tag-type">지력</span>
-              <span class="tag tag-pos">탱커</span>
-            </div>
-          </div>
-        </a>
-      </div>
+  </section>
+
+  <!-- 티어표 -->
+  <section class="tier-section">
+
+    <div class="section-header">
+      <h2 class="section-title"><span>K-Entertainment Tier</span></h2>
+      <a href="tier.html" class="section-sub" style="color:var(--text-mute);text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">전체 티어표 보기 →</a>
     </div>
 
-    <!-- B급 -->
-    <div class="tier-row tier-b">
-      <div class="tier-label">B<small>예능용병</small></div>
-      <div class="tier-cards">
-        <a href="detail.html" class="card">
-          <div class="card-avatar">💪</div>
-          <div class="card-info">
-            <span class="card-name">박명수</span>
-            <div class="card-tags">
-              <span class="tag tag-type">무력+본능</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🛡️</div>
-          <div class="card-info">
-            <span class="card-name">정준하</span>
-            <div class="card-tags">
-              <span class="tag tag-type">무력</span>
-              <span class="tag tag-pos">탱커</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🎭</div>
-          <div class="card-info">
-            <span class="card-name">문세윤</span>
-            <div class="card-tags">
-              <span class="tag tag-type">무력</span>
-              <span class="tag tag-pos">딜러</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🃏</div>
-          <div class="card-info">
-            <span class="card-name">김종민</span>
-            <div class="card-tags">
-              <span class="tag tag-type">본능</span>
-              <span class="tag tag-pos">탱커</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🏃</div>
-          <div class="card-info">
-            <span class="card-name">이광수</span>
-            <div class="card-tags">
-              <span class="tag tag-type">본능</span>
-              <span class="tag tag-pos">탱커</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🎤</div>
-          <div class="card-info">
-            <span class="card-name">김영철</span>
-            <div class="card-tags">
-              <span class="tag tag-type">무력</span>
-              <span class="tag tag-pos">탱커</span>
-            </div>
-          </div>
-        </a>
-        <a href="detail.html" class="card">
-          <div class="card-avatar">🎪</div>
-          <div class="card-info">
-            <span class="card-name">지상렬</span>
-            <div class="card-tags">
-              <span class="tag tag-type">본능</span>
-              <span class="tag tag-pos">스틸러</span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
+    <div class="tier-blocks">
 
-    <!-- C급 -->
-    <div class="tier-row tier-c">
-      <div class="tier-label">C<small>예능병사</small></div>
-      <div class="tier-cards">
-        <div class="card" style="opacity:0.6;">
-          <div class="card-avatar">👤</div>
-          <div class="card-info">
-            <span class="card-name">추가 예정</span>
-            <div class="card-tags">
-              <span class="tag tag-type">미정</span>
+      <!-- S -->
+      <div class="tier-block" id="tier-s">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-s">S</span>
+          <span class="tb-name">예능 대장군</span>
+          <span class="tb-desc">혼자서 예능 프로그램 단독으로 진행 가능한 수준</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb">
+              <span class="p-initial">강</span>
+              <img src="img/강호동프로필.png" alt="강호동" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-muryok">무력형</span>
+                  <span class="badge b-pos">딜러</span>
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="p-name">강호동</div>
+          </a>
+          <a href="detail/유재석.html" class="p-card" data-type="지략" data-pos="딜러">
+            <div class="p-thumb">
+              <span class="p-initial">유</span>
+              <img src="img/유재석프로필.png" alt="유재석" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-jiryak">지략형</span>
+                  <span class="badge b-pos">딜러</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">유재석</div>
+          </a>
+          <a href="detail/이경규.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb">
+              <span class="p-initial">이</span>
+              <img src="img/이경규프로필.png" alt="이경규" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-muryok">무력형</span>
+                  <span class="badge b-pos">딜러</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">이경규</div>
+          </a>
+          <a href="detail/신동엽.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">신</span><img src="img/신동엽프로필.png" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">신동엽</div>
+          </a>
         </div>
       </div>
-    </div>
 
-    <!-- D급 -->
-    <div class="tier-row tier-d">
-      <div class="tier-label">D<small>예능훈련병</small></div>
-      <div class="tier-cards">
-        <div class="card" style="opacity:0.6;">
-          <div class="card-avatar">👤</div>
-          <div class="card-info">
-            <span class="card-name">추가 예정</span>
-            <div class="card-tags">
-              <span class="tag tag-type">미정</span>
-            </div>
-          </div>
+      <!-- A -->
+      <div class="tier-block" id="tier-a">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-a">A</span>
+          <span class="tb-name">예능 장군</span>
+          <span class="tb-desc">예능 프로그램 MC 가능한 수준, 단독 진행은 부족</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">장</span><img src="img/장동민.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">장동민</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">탁</span><img src="img/탁재훈.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">탁재훈</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="지략" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김구라.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">김구라</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">허</span><img src="img/허경환.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">허경환</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">유</span><img src="img/유세윤.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">유세윤</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="지략" data-pos="서포터">
+            <div class="p-thumb"><span class="p-initial">전</span><img src="img/전현무.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">서포터</span></div></div></div>
+            <div class="p-name">전현무</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="지략" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">서</span><img src="img/서장훈.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">서장훈</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">이</span><img src="img/이수근.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">이수근</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">하</span><img src="img/하하.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">하하</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">노</span><img src="img/노홍철.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">노홍철</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="지략" data-pos="서포터">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김국진.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">서포터</span></div></div></div>
+            <div class="p-name">김국진</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="지략" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">정</span><img src="img/정형돈.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">정형돈</div>
+          </a>
         </div>
       </div>
+
+      <!-- B -->
+      <div class="tier-block" id="tier-b">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-b">B</span>
+          <span class="tb-name">예능 용병</span>
+          <span class="tb-desc">게스트 및 고정 멤버 모두 참여 가능, 제 몫의 웃음분량 만들 수 있는 수준</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">박</span><img src="img/박명수.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">박명수</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">정</span><img src="img/정준하.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">정준하</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">문</span><img src="img/문세윤.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">문세윤</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="스틸러">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김종민.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">스틸러</span></div></div></div>
+            <div class="p-name">김종민</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">이</span><img src="img/이광수.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">이광수</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김영철.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">김영철</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="스틸러">
+            <div class="p-thumb"><span class="p-initial">지</span><img src="img/지상렬.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">스틸러</span></div></div></div>
+            <div class="p-name">지상렬</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="지략" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">지</span><img src="img/지석진.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">지석진</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">신</span><img src="img/신기루.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">신기루</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="지략" data-pos="서포터">
+            <div class="p-thumb"><span class="p-initial">장</span><img src="img/장도연.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-jiryak">지략형</span><span class="badge b-pos">서포터</span></div></div></div>
+            <div class="p-name">장도연</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">신</span><img src="img/신봉선.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">신봉선</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">조</span><img src="img/조세호.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">조세호</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">김</span><img src="img/김희철.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">김희철</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">데</span><img src="img/데프콘.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">데프콘</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="tier-block" id="tier-c">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-c">C</span>
+          <span class="tb-name">예능 병사</span>
+          <span class="tb-desc">게스트로 참여하여 간간히 웃음을 만들어 낼 수 있는 수준, 고정멤버로는 부족</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="탱커">
+            <div class="p-thumb">
+              <span class="p-initial">황</span>
+              <img src="img/황광희.jpg" alt="황광희" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-bonneung">본능형</span>
+                  <span class="badge b-pos">탱커</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">황광희</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb"><span class="p-initial">딘</span><img src="img/딘딘.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">딜러</span></div></div></div>
+            <div class="p-name">딘딘</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="탱커">
+            <div class="p-thumb"><span class="p-initial">이</span><img src="img/이상민.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">탱커</span></div></div></div>
+            <div class="p-name">이상민</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="스틸러">
+            <div class="p-thumb"><span class="p-initial">민</span><img src="img/민경훈.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-bonneung">본능형</span><span class="badge b-pos">스틸러</span></div></div></div>
+            <div class="p-name">민경훈</div>
+          </a>
+          <a href="detail/강호동.html" class="p-card" data-type="무력" data-pos="스틸러">
+            <div class="p-thumb"><span class="p-initial">길</span><img src="img/길.jpg" onerror="this.remove()"><div class="p-hover-info"><div class="p-hover-badges"><span class="badge b-muryok">무력형</span><span class="badge b-pos">스틸러</span></div></div></div>
+            <div class="p-name">길</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- D -->
+      <div class="tier-block" id="tier-d">
+        <div class="tier-block-hd">
+          <span class="tb-badge tb-d">D</span>
+          <span class="tb-name">예능 훈련병</span>
+          <span class="tb-desc">예능의 의지와 열정이 있는 수준</span>
+        </div>
+        <div class="tier-cards-grid">
+          <a href="detail/강호동.html" class="p-card" data-type="본능" data-pos="딜러">
+            <div class="p-thumb">
+              <span class="p-initial">윤</span>
+              <img src="img/윤형빈.jpg" alt="윤형빈" onerror="this.remove()">
+              <div class="p-hover-info">
+                <div class="p-hover-badges">
+                  <span class="badge b-bonneung">본능형</span>
+                  <span class="badge b-pos">딜러</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-name">윤형빈</div>
+          </a>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-  </div>
+  <!-- 최근 업로드 -->
+  <section class="videos-section">
+    <div class="videos-header">
+      <h2 class="videos-title">최근 업로드</h2>
+      <a href="#" class="videos-link">유튜브 채널 바로가기 →</a>
+    </div>
+    <div class="video-grid">
+      <a href="#" class="video-card">
+        <div class="video-thumb"><img src="img/video_thumb_1.jpg" onerror="this.remove()"><span class="video-new-badge">NEW</span><div class="video-play">▶</div></div>
+        <div class="video-info"><div class="video-title">유재석이 S티어인 진짜 이유 — 지략형 MC 완전 해부</div><div class="video-meta">조회수 12.4만 · 3일 전</div></div>
+      </a>
+      <a href="#" class="video-card">
+        <div class="video-thumb"><img src="img/video_thumb_2.jpg" onerror="this.remove()"><div class="video-play">▶</div></div>
+        <div class="video-info"><div class="video-title">강호동 vs 유재석 — 무력형 vs 지략형 10년 비교</div><div class="video-meta">조회수 8.1만 · 1주 전</div></div>
+      </a>
+      <a href="#" class="video-card">
+        <div class="video-thumb"><img src="img/video_thumb_3.jpg" onerror="this.remove()"><div class="video-play">▶</div></div>
+        <div class="video-info"><div class="video-title">예능인 포지션 완전정리 — 딜러/탱커/서포터/스틸러?</div><div class="video-meta">조회수 21만 · 2주 전</div></div>
+      </a>
+      <a href="#" class="video-card">
+        <div class="video-thumb"><img src="img/video_thumb_4.jpg" onerror="this.remove()"><div class="video-play">▶</div></div>
+        <div class="video-info"><div class="video-title">망한 예능 부검 — 이 프로그램이 실패한 구조적 이유</div><div class="video-meta">조회수 5.3만 · 3주 전</div></div>
+      </a>
+    </div>
+  </section>
 
-  <p class="updated">© 예썰 — 매주 업데이트</p>
+  <!-- 푸터 -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-logo">Korean Entertainment Tier</div>
+      <div class="footer-sub">한국 예능 티어</div>
+    </div>
+    <div class="footer-scroll" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+    <div class="footer-brand">KET</div>
+  </footer>
+
 
 </body>
 </html>

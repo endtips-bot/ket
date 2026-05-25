@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예썰 — 예능인 티어표</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #0d0d1a;
+      color: #e0e0e0;
+      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* 헤더 */
+    header {
+      background: #11112a;
+      border-bottom: 1px solid #2a2a4a;
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+
+    .logo span {
+      color: #a855f7;
+    }
+
+    nav a {
+      color: #aaa;
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: #fff; }
+    nav a.active { color: #a855f7; font-weight: 700; }
+
+    /* 히어로 */
+    .hero {
+      text-align: center;
+      padding: 52px 20px 32px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em {
+      color: #a855f7;
+      font-style: normal;
+    }
+
+    .hero p {
+      color: #666;
+      font-size: 13px;
+    }
+
+    /* 필터 탭 */
+    .filters {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 0 20px 32px;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-label {
+      font-size: 10px;
+      color: #444;
+      letter-spacing: 2px;
+      margin-right: 4px;
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .filter-btn {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      color: #aaa;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #a855f7;
+      color: #fff;
+    }
+
+    .filter-btn.active {
+      background: #a855f7;
+      border-color: #a855f7;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* 티어 테이블 */
+    .tier-table {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tier-row {
+      display: flex;
+      align-items: center;
+      background: #13132a;
+      border: 1px solid #2a2a4a;
+      border-radius: 8px;
+      min-height: 80px;
+      overflow: hidden;
+    }
+
+    .tier-label {
+      width: 72px;
+      min-width: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      padding: 16px 0;
+      border-right: 1px solid #2a2a4a;
+    }
+
+    .tier-label small {
+      font-size: 10px;
+      font-weight: 400;
+      margin-top: 2px;
+      letter-spacing: 1px;
+    }
+
+    .tier-s .tier-label { background: rgba(255, 215, 0, 0.12); color: #ffd700; }
+    .tier-a .tier-label { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
+    .tier-b .tier-label { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
+    .tier-c .tier-label { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
+    .tier-d .tier-label { background: rgba(107, 114, 128, 0.12); color: #6b7280; }
+
+    .tier-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 16px;
+    }
+
+    /* 예능인 카드 */
+    .card {
+      background: #1e1e38;
+      border: 1px solid #2a2a4a;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: inherit;
+      min-width: 120px;
+    }
+
+    .card:hover {
+      border-color: #a855f7;
+      background: #252545;
+      transform: translateY(-2px);
+    }
+
+    .card-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #2a2a4a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .card-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 4px;
+    }
+
+    .tag {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .tag-type {
+      background: rgba(168, 85, 247, 0.2);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .tag-pos {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    /* 업데이트 날짜 */
+    .updated {
+      text-align: center;
+      color: #444;
+      font-size: 12px;
+      padding-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">예<span>썰</span> TIER</div>
+    <nav>
+      <a href="index.html" class="active">티어표</a>
+      <a href="#">루북</a>
+      <a href="#">유튜브 채널</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>K-예능인 <em>티어표</em></h1>
+    <p>마지막 업데이트 : 2024.05.24</p>
+  </div>
+
+  <div class="filters">
+    <div class="filter-group">
+      <span class="filter-label">유형</span>
+      <button class="filter-btn active">전체</button>
+      <button class="filter-btn">무력형</button>
+      <button class="filter-btn">지력형</button>
+      <button class="filter-btn">본능형</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">포지션</span>
+      <button class="filter-btn">탱커</button>
+      <button class="filter-btn">딜러</button>
+      <button class="filter-btn">서포터</button>
+      <button class="filter-btn">스틸러</button>
+    </div>
+  </div>
+
+  <div class="tier-table">
+
+    <!-- S급 -->
+    <div class="tier-row tier-s">
+      <div class="tier-label">S<small>예능대장군</small></div>
+      <div class="tier-cards">
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🔥</div>
+          <div class="card-info">
+            <span class="card-name">강호동</span>
+            <div class="card-tags">
+              <span class="tag tag-type">무력+본능</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">👑</div>
+          <div class="card-info">
+            <span class="card-name">유재석</span>
+            <div class="card-tags">
+              <span class="tag tag-type">지력</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- A급 -->
+    <div class="tier-row tier-a">
+      <div class="tier-label">A<small>예능장군</small></div>
+      <div class="tier-cards">
+        <a href="detail.html" class="card">
+          <div class="card-avatar">⚡</div>
+          <div class="card-info">
+            <span class="card-name">장동민</span>
+            <div class="card-tags">
+              <span class="tag tag-type">본능</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🎯</div>
+          <div class="card-info">
+            <span class="card-name">탁재훈</span>
+            <div class="card-tags">
+              <span class="tag tag-type">본능</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🎙️</div>
+          <div class="card-info">
+            <span class="card-name">전현무</span>
+            <div class="card-tags">
+              <span class="tag tag-type">지력</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🗡️</div>
+          <div class="card-info">
+            <span class="card-name">김구라</span>
+            <div class="card-tags">
+              <span class="tag tag-type">지력</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🏀</div>
+          <div class="card-info">
+            <span class="card-name">서장훈</span>
+            <div class="card-tags">
+              <span class="tag tag-type">지력</span>
+              <span class="tag tag-pos">탱커</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">⚔️</div>
+          <div class="card-info">
+            <span class="card-name">이수근</span>
+            <div class="card-tags">
+              <span class="tag tag-type">본능</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🎵</div>
+          <div class="card-info">
+            <span class="card-name">유세윤</span>
+            <div class="card-tags">
+              <span class="tag tag-type">무력</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🥊</div>
+          <div class="card-info">
+            <span class="card-name">허경환</span>
+            <div class="card-tags">
+              <span class="tag tag-type">지력</span>
+              <span class="tag tag-pos">탱커</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- B급 -->
+    <div class="tier-row tier-b">
+      <div class="tier-label">B<small>예능용병</small></div>
+      <div class="tier-cards">
+        <a href="detail.html" class="card">
+          <div class="card-avatar">💪</div>
+          <div class="card-info">
+            <span class="card-name">박명수</span>
+            <div class="card-tags">
+              <span class="tag tag-type">무력+본능</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🛡️</div>
+          <div class="card-info">
+            <span class="card-name">정준하</span>
+            <div class="card-tags">
+              <span class="tag tag-type">무력</span>
+              <span class="tag tag-pos">탱커</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🎭</div>
+          <div class="card-info">
+            <span class="card-name">문세윤</span>
+            <div class="card-tags">
+              <span class="tag tag-type">무력</span>
+              <span class="tag tag-pos">딜러</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🃏</div>
+          <div class="card-info">
+            <span class="card-name">김종민</span>
+            <div class="card-tags">
+              <span class="tag tag-type">본능</span>
+              <span class="tag tag-pos">탱커</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🏃</div>
+          <div class="card-info">
+            <span class="card-name">이광수</span>
+            <div class="card-tags">
+              <span class="tag tag-type">본능</span>
+              <span class="tag tag-pos">탱커</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🎤</div>
+          <div class="card-info">
+            <span class="card-name">김영철</span>
+            <div class="card-tags">
+              <span class="tag tag-type">무력</span>
+              <span class="tag tag-pos">탱커</span>
+            </div>
+          </div>
+        </a>
+        <a href="detail.html" class="card">
+          <div class="card-avatar">🎪</div>
+          <div class="card-info">
+            <span class="card-name">지상렬</span>
+            <div class="card-tags">
+              <span class="tag tag-type">본능</span>
+              <span class="tag tag-pos">스틸러</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- C급 -->
+    <div class="tier-row tier-c">
+      <div class="tier-label">C<small>예능병사</small></div>
+      <div class="tier-cards">
+        <div class="card" style="opacity:0.6;">
+          <div class="card-avatar">👤</div>
+          <div class="card-info">
+            <span class="card-name">추가 예정</span>
+            <div class="card-tags">
+              <span class="tag tag-type">미정</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D급 -->
+    <div class="tier-row tier-d">
+      <div class="tier-label">D<small>예능훈련병</small></div>
+      <div class="tier-cards">
+        <div class="card" style="opacity:0.6;">
+          <div class="card-avatar">👤</div>
+          <div class="card-info">
+            <span class="card-name">추가 예정</span>
+            <div class="card-tags">
+              <span class="tag tag-type">미정</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="updated">© 예썰 — 매주 업데이트</p>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+.claude/
+extensions/
+argv.json
+*.log

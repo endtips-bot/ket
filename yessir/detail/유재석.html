@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>신동엽 — KET</title>
+  <title>유재석 — KET</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@
 
     .detail-hero { position:relative; height:70vw; max-height:580px; min-height:340px; overflow:hidden; background:#0a0a0a; }
     .hero-backdrop { position:absolute; inset:0; background:var(--surface2); display:flex; align-items:center; justify-content:center; overflow:hidden; }
-    .hero-backdrop img { width:100%; height:100%; object-fit:cover; object-position:top center; filter:blur(2px) brightness(0.5); transform:scale(1.05); }
+    .hero-backdrop img { width:100%; height:100%; object-fit:cover; object-position:center; filter:blur(1px) brightness(0.45); transform:scale(1.05); }
     .hero-backdrop-initial { font-size:clamp(120px,25vw,280px); font-weight:900; color:rgba(255,255,255,0.03); user-select:none; position:absolute; }
     .hero-overlay { position:absolute; inset:0; background:linear-gradient(77deg,rgba(20,20,20,0.95) 0%,rgba(20,20,20,0.7) 40%,rgba(20,20,20,0.2) 70%),linear-gradient(180deg,rgba(0,0,0,0.2) 0%,#141414 100%); }
     .hero-content { position:absolute; bottom:12%; left:4%; z-index:2; max-width:600px; }
@@ -118,12 +118,12 @@
 
   <header id="main-header">
     <div class="header-left">
-      <a href="design-a.html" class="logo">KET</a>
+      <a href="../index.html" class="logo">KET</a>
       <nav id="main-nav">
-        <a href="design-a.html">홈</a>
-        <a href="tier.html" class="active">티어</a>
-        <a href="youtube.html">유튜브</a>
-        <a href="legend.html">레전드</a>
+        <a href="../index.html">홈</a>
+        <a href="../tier.html" class="active">티어</a>
+        <a href="../youtube.html">유튜브</a>
+        <a href="../legend.html">레전드</a>
       </nav>
     </div>
     <button class="nav-toggle" onclick="document.getElementById('main-nav').classList.toggle('open')">☰</button>
@@ -131,23 +131,23 @@
 
   <div class="detail-hero">
     <div class="hero-backdrop">
-      <div class="hero-backdrop-initial">신</div>
-      <img src="img/신동엽프로필.png" alt="신동엽" onerror="this.style.display='none'">
+      <div class="hero-backdrop-initial">유</div>
+      <img src="../img/유재석.png" alt="유재석" onerror="this.style.display='none'">
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="hero-badges">
         <span class="hero-tier-badge htb-s">S TIER</span>
         <span class="hero-rank-badge">예능 대장군</span>
-        <span class="hero-rank-badge">본능형 · 딜러</span>
+        <span class="hero-rank-badge">지략형 · 딜러</span>
       </div>
-      <div class="hero-name">신동엽</div>
+      <div class="hero-name">유재석</div>
       <div class="hero-meta">
-        <span class="hero-meta-score">92점</span>
+        <span class="hero-meta-score">99점</span>
         <div class="hero-meta-dot"></div>
-        <span class="hero-meta-item">개그맨 / DJ 출신</span>
+        <span class="hero-meta-item">개그맨 출신</span>
         <div class="hero-meta-dot"></div>
-        <span class="hero-meta-item">1993 — 현재</span>
+        <span class="hero-meta-item">1991 — 현재</span>
         <div class="hero-meta-dot"></div>
         <span class="hero-meta-tag">딜러</span>
       </div>
@@ -164,16 +164,18 @@
       <div class="eval-section">
         <div class="section-label">예썰 평가</div>
         <p class="eval-text">
-          <strong>신동엽</strong>은 한국 예능에서 가장 순수한 <strong>본능형 딜러</strong>다.
-          계획이나 설계 없이 상황 그 자체에서 즉각적으로 웃음을 만들어내는 능력이
-          전 예능인 중 최상위권에 위치하며, 이 능력이 30년간 한 번도 흔들리지 않았다.
+          <strong>유재석</strong>은 K-예능 역사상 가장 오랫동안 정상을 유지한 <strong>지략형 딜러</strong>다.
+          화려한 개인기 대신 상황 전체를 읽고 흐름을 설계해 직접 웃음을 만들어내는 것이
+          그의 핵심 무기다. 공격이 폭발적이지 않아도, 판을 장악한 상태에서 나오는
+          한 마디가 프로그램 전체의 웃음 포인트가 된다.
           <br><br>
-          DJ 출신 특유의 독보적 언변이 본능과 결합되면서 토크쇼·게임예능·연애예능을
-          가리지 않는 만능 딜러로 군림. 특히 <strong>상대방의 허를 찌르는 직진형 공격과
-          직접적인 한 방</strong>은 어떤 상황에서도 포지션을 만들어낸다.
+          무한도전의 장기 기획, 런닝맨의 게임 진행, 유퀴즈의 인터뷰 설계까지 —
+          프로그램의 포맷이 달라져도 항상 S급 위치를 유지하는 유일한 예능인.
+          <strong>판을 설계하고, 그 판에서 직접 터뜨리는</strong>
+          지략형 딜러의 교과서적 플레이다.
         </p>
         <div class="verdict-box">
-          <p>판결 — "계산 없이 터뜨리고, 직진으로 찌른다.<br>한국 예능 본능형 딜러의 정점, 30년 무결점 현역."</p>
+          <p>판결 — "모두를 빛나게 하면서도 혼자서 판을 운영한다.<br>한국 예능 역사상 최장기 S급 예능인의 증거."</p>
         </div>
       </div>
 
@@ -182,33 +184,33 @@
         <div class="stat-cards-grid">
           <div class="stat-card">
             <div class="stat-card-name">개인기</div>
-            <div class="stat-card-num">85</div>
-            <div class="stat-card-bar"><div class="stat-card-fill fill-red" data-w="85"></div></div>
+            <div class="stat-card-num">72</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-red" data-w="72"></div></div>
           </div>
           <div class="stat-card">
             <div class="stat-card-name">순발력</div>
-            <div class="stat-card-num">97</div>
-            <div class="stat-card-bar"><div class="stat-card-fill fill-orange" data-w="97"></div></div>
+            <div class="stat-card-num">88</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-orange" data-w="88"></div></div>
           </div>
           <div class="stat-card">
             <div class="stat-card-name">판단력</div>
-            <div class="stat-card-num">82</div>
-            <div class="stat-card-bar"><div class="stat-card-fill fill-amber" data-w="82"></div></div>
+            <div class="stat-card-num">97</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-amber" data-w="97"></div></div>
           </div>
           <div class="stat-card">
             <div class="stat-card-name">기획력</div>
-            <div class="stat-card-num">68</div>
-            <div class="stat-card-bar"><div class="stat-card-fill fill-cyan" data-w="68"></div></div>
+            <div class="stat-card-num">90</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-cyan" data-w="90"></div></div>
           </div>
           <div class="stat-card">
             <div class="stat-card-name">리액션</div>
-            <div class="stat-card-num">90</div>
-            <div class="stat-card-bar"><div class="stat-card-fill fill-green" data-w="90"></div></div>
+            <div class="stat-card-num">85</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-green" data-w="85"></div></div>
           </div>
           <div class="stat-card">
             <div class="stat-card-name">언변</div>
-            <div class="stat-card-num">95</div>
-            <div class="stat-card-bar"><div class="stat-card-fill fill-purple" data-w="95"></div></div>
+            <div class="stat-card-num">97</div>
+            <div class="stat-card-bar"><div class="stat-card-fill fill-purple" data-w="97"></div></div>
           </div>
         </div>
         <div class="radar-wrap">
@@ -221,15 +223,15 @@
       <div class="pros-cons">
         <div class="pc-block pc-pros">
           <div class="pc-title">강점 PROS</div>
-          <div class="pc-item">즉흥 폭발력 전 예능인 최상위권</div>
-          <div class="pc-item">DJ 출신의 독보적 언변과 진행 능력</div>
-          <div class="pc-item">장르 불문 어디서나 포지션을 만드는 유연성</div>
-          <div class="pc-item">직진형 공격의 강력하고 일관된 임팩트</div>
+          <div class="pc-item">상황 설계·판 운영 능력 전 예능인 최상위</div>
+          <div class="pc-item">출연진 케어와 분위기 조율의 달인</div>
+          <div class="pc-item">위기 상황에서의 즉각적 구조 능력</div>
+          <div class="pc-item">어떤 포맷·세대에도 적응하는 유연성</div>
         </div>
         <div class="pc-block pc-cons">
           <div class="pc-title">약점 CONS</div>
-          <div class="pc-item">장기 기획보다 단기 임팩트에 최적화된 구조</div>
-          <div class="pc-item">서포팅보다 공격형이라 팀 빌딩은 약세</div>
+          <div class="pc-item">즉흥 폭발력은 강호동 대비 약세</div>
+          <div class="pc-item">단독 개인기보다 판 설계에 의존하는 구조</div>
         </div>
       </div>
 
@@ -239,32 +241,32 @@
           <div class="program-item">
             <span class="program-num">1</span>
             <div class="program-info">
-              <div class="program-name">라디오스타</div>
-              <div class="program-role">고정 패널 — 공격형 딜러 포지션</div>
+              <div class="program-name">무한도전</div>
+              <div class="program-role">MC — 12년 장기 운영</div>
             </div>
             <div class="program-dot"></div>
           </div>
           <div class="program-item">
             <span class="program-num">2</span>
             <div class="program-info">
-              <div class="program-name">복불복</div>
-              <div class="program-role">MC — 게임예능 진행</div>
+              <div class="program-name">런닝맨</div>
+              <div class="program-role">MC — 현재까지 진행</div>
             </div>
             <div class="program-dot"></div>
           </div>
           <div class="program-item">
             <span class="program-num">3</span>
             <div class="program-info">
-              <div class="program-name">연애의 참견</div>
-              <div class="program-role">MC — 토크형 진행</div>
+              <div class="program-name">유퀴즈 온 더 블럭</div>
+              <div class="program-role">MC — 인터뷰 설계형</div>
             </div>
             <div class="program-dot"></div>
           </div>
           <div class="program-item">
             <span class="program-num">4</span>
             <div class="program-info">
-              <div class="program-name">슈가맨</div>
-              <div class="program-role">MC — 레트로 예능</div>
+              <div class="program-name">놀면 뭐하니</div>
+              <div class="program-role">MC — 기획·실험형</div>
             </div>
             <div class="program-dot"></div>
           </div>
@@ -276,9 +278,9 @@
     <div class="detail-side">
       <div class="rep-block">
         <div class="rep-label">예능평판지수 · 26년 1Q</div>
-        <div class="rep-num">92<sub>/ 100</sub></div>
-        <div class="rep-bar"><div class="rep-fill" data-w="92"></div></div>
-        <div class="rep-change">▲ 2점 상승 (라디오스타 전성기)</div>
+        <div class="rep-num">99<sub>/ 100</sub></div>
+        <div class="rep-bar"><div class="rep-fill" data-w="99"></div></div>
+        <div class="rep-change">▲ 최고점 유지</div>
       </div>
 
       <div class="side-section">
@@ -290,7 +292,7 @@
 
       <div class="side-section">
         <div class="side-label">유형</div>
-        <div class="side-tags"><span class="stag stag-red">본능형</span></div>
+        <div class="side-tags"><span class="stag stag-red">지략형</span></div>
       </div>
 
       <div class="side-section">
@@ -300,12 +302,12 @@
 
       <div class="side-section">
         <div class="side-label">출신</div>
-        <div class="side-tags"><span class="stag stag-green">개그맨 / DJ 출신</span></div>
+        <div class="side-tags"><span class="stag stag-green">개그맨 출신</span></div>
       </div>
 
       <div class="side-section">
         <div class="side-label">활동 기간</div>
-        <div class="side-value">1993년 — 현재</div>
+        <div class="side-value">1991년 — 현재</div>
       </div>
 
       <div class="side-divider"></div>
@@ -314,11 +316,11 @@
         <div class="side-label">관련 영상</div>
         <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;">
           <div style="padding:12px 14px;background:var(--surface);border-radius:4px;font-size:13px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='var(--surface)'">
-            <div style="font-weight:700;color:var(--text);margin-bottom:3px;">신동엽 S급 분석</div>
+            <div style="font-weight:700;color:var(--text);margin-bottom:3px;">유재석 S급 분석</div>
             <div style="color:var(--text-mute);font-size:11px;">예썰 · 준비중</div>
           </div>
           <div style="padding:12px 14px;background:var(--surface);border-radius:4px;font-size:13px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='var(--surface)'">
-            <div style="font-weight:700;color:var(--text);margin-bottom:3px;">본능형 딜러란?</div>
+            <div style="font-weight:700;color:var(--text);margin-bottom:3px;">지략형 딜러란?</div>
             <div style="color:var(--text-mute);font-size:11px;">예썰 루북 · 준비중</div>
           </div>
         </div>
@@ -344,14 +346,14 @@
       const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2;
       const R = Math.min(cx,cy) - 30, N = 6, LEVELS = 3;
       const LABELS = ['개인기','순발력','판단력','기획력','리액션','언변'];
-      const VALUES = [85, 97, 82, 68, 90, 95];
+      const VALUES = [72, 88, 97, 90, 85, 97];
       const ang = i => (Math.PI*2*i/N) - Math.PI/2;
       const pt  = (i,r) => [cx + r*Math.cos(ang(i)), cy + r*Math.sin(ang(i))];
       let progress = 0;
       const draw = () => {
         ctx.clearRect(0,0,W,H);
         for (let lv=1;lv<=LEVELS;lv++) {
-          const r=R*lv/LEVELS; ctx.beginPath();
+          const r = R*lv/LEVELS; ctx.beginPath();
           for (let i=0;i<N;i++) { const [x,y]=pt(i,r); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }
           ctx.closePath(); ctx.strokeStyle='rgba(160,130,40,0.28)'; ctx.lineWidth=1; ctx.stroke();
         }
